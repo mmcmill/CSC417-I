@@ -65,7 +65,7 @@ main:- tests, testNepotism.
 
 % Hints: don't go above 999 (bad things happen).
 % Hints: if you stay above 700 then the standard arithmetics can be inside 
-% Hints: for trivial little prefix, postfix markers, use 1
+% Hints: for trivial little prefix or postfix markers, use 1
 
 
 :- op(903,fx, rule).
