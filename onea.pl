@@ -65,15 +65,16 @@ main:- tests, testNepotism.
 
 % Hints: don't go above 999 (bad things happen).
 % Hints: if you stay above 700 then the standard arithmetics can be inside 
-% Hints: for trivial little prefix or postfix markers, use 1
+% Hints: for trivial little prefix, postfix markers, use 1
 
 
-:- op(903,fx, rule).
+:- op(1,fx, rule).
 :- op(902,xfx, if).
 :- op(901,yfx, or).
 :- op(900,yfx, and).
-:- op(899,fx, not).
-:- op(898,yfx, had).
+:- op(899,fy, not).
+:- op(898,xfy, had).
+:- op(898,xfx, has).
 :- op(897,yfx, in).
 :- op(896,xfx, then).
 
@@ -106,7 +107,7 @@ rule 11 if emp = _ had job =_ then b.
 % "X had Y" is inside "or"
 rule 12 if a or emp = _ had job=_ then b.
 
-% "X had Y" is inside "amd"
+% "X had Y" is inside "and"
 rule 13 if a or b and emp = _ had job=_ then c.
 
 % there can be multiple "had" tests
@@ -187,7 +188,8 @@ testNepotism :-
 % WARNING: the code for "had" is incomplete
 
 had(X and Y)      :- had(X), had(Y).
-had(X =Id had Y)  :- fact(X,Id,Fs),  b4(Y,Fs).
+had(X =Id had Y)  :- fact(X,Id,Fs), 
+   b4(Y,Fs). 
 
 b4(X had Y,Fs)    :- b4(X,Fs), b4(Y,Fs).
 b4(X =  Y, Fs)    :- member(X=Y,Fs).
