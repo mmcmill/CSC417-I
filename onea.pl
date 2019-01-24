@@ -68,16 +68,25 @@ main:- tests, testNepotism.
 % Hints: for trivial little prefix, postfix markers, use 1
 
 
-:- op(1,fx, rule).
-:- op(902,xfx, if).
-:- op(901,yfx, or).
-:- op(900,yfx, and).
-:- op(899,fy, not).
-:- op(898,xfy, had).
-:- op(898,xfx, has).
-:- op(897,yfx, in).
-:- op(896,xfx, then).
+% :- op(1,fx, rule).
+% :- op(902,xfx, if).
+% :- op(901,yfx, or).
+% :- op(900,yfx, and).
+% :- op(899,fy, not).
+% :- op(898,xfy, had).
+% :- op(898,xfx, has).
+% :- op(897,yfx, in).
+% :- op(896,xfx, then).
 
+:- op(903,  fx,   rule).
+:- op(902,  xfx,  if).
+:- op(901,  xfx,  then).
+:- op(900,  xfy,  and).
+:- op(899,  yfx,  or).
+:- op(888,  fy,   not).
+:- op(887,  xfy,  had).
+:- op(886,  xfx,  has).
+:- op(885,  yfx,  in).
 
 rule1 if a then b.
 
