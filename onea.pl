@@ -204,8 +204,16 @@ b4(X had Y,Fs)    :- b4(X,Fs), b4(Y,Fs).
 b4(X =  Y, Fs)    :- member(X=Y,Fs).
 
 % rule 15 if emp = _ had job=_ had mother in [president,chancellor]  then c.
-b4(X in [A,_B], Fs)  :- member(X=A, Fs).        % Check first item
-b4(X in [_A, B], Fs) :- member(X=B, Fs).        % Check second
+b4(X in [A,_B], Fs)  :- member(X=A, Fs).  % Check first item
+b4(X in [_A, B], Fs) :- member(X=B, Fs).  % Check second
+
+% rule 16 if  
+%      emp = _ had job=J had mother in [president,chancellor] and
+%      job = J had salary =< 10000 
+% then c.
+b4(X =< Y, Fs) :- member(X = Y, Fs).   % Check if equal
+b4(X =< Y, Fs) :- member(X < Y, Fs).   % Check if less than
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This is a complete implementation of "has"
