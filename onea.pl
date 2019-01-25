@@ -197,11 +197,15 @@ testNepotism :-
 % WARNING: the code for "had" is incomplete
 
 had(X and Y)      :- had(X), had(Y).
-had(X =Id had Y)  :- fact(X,Id,Fs), 
-   b4(Y,Fs). 
+had(X =Id had Y)  :- fact(X,Id,Fs),
+   b4(Y,Fs).
 
 b4(X had Y,Fs)    :- b4(X,Fs), b4(Y,Fs).
 b4(X =  Y, Fs)    :- member(X=Y,Fs).
+
+% rule 15 if emp = _ had job=_ had mother in [president,chancellor]  then c.
+b4(X in [A,_B], Fs)  :- member(X=A, Fs).        % Check first item
+b4(X in [_A, B], Fs) :- member(X=B, Fs).        % Check second
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This is a complete implementation of "has"
