@@ -1,3 +1,4 @@
+"All below are small talk tools to be used"
 "-------------------------------------------------------"
 ! Object methods !
 s
