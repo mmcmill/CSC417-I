@@ -90,7 +90,11 @@ numInc: t hasX: x hasD:d
       ^x.
     ].
   ^x!
-  
+
+eject: aBlock 
+    | newCollection |
+    newCollection := self copyEmpty.
+    self
+        do: [:element | (aBlock select: element isEmpty) ifTrue: [newCollection add: element]].
+    ^newCollection!
 !
-  
-  
