@@ -12,49 +12,85 @@ init: text
        w: 1 ;
        id: self printString !
 
+setN: newN
+  n := newN!
+
+getN
+  ^n!
+
+setMU: newMU
+  mu := newMU!
+
+getMU
+  ^mu!
+  
+setm2: newm2
+  m2 := newm2!
+
+getm2
+  ^m2!
+
+setSD: newSD
+  sd := newSD!
+
+getSD
+  ^sd!
+
+setlo: newlo
+  lo := newlo!
+  
+getlo
+  ^lo!
+  
+sethi: newhi
+  hi := newhi!
+  
+gethi
+  ^hi!
+
 
 numInc: t hasX: x hasD:d 
   (x = '?')
     ifTrue: [ ^x ].
-  t.n := t.n + 1.
-  d := x - t.mu.
-  t.mu := t.mu + (d/t.n).
-  t.m2 := t.m2 + d*(x - t.mu).
+  t setN: (t getN + 1).
+  d := x - t getMU.
+  t setMU: ( t getMU + (d/t getN)).
+  t setm2: (t getm2 + d*(x - t getMU) ).
   "if x is greater than t.hi, then t.hi = x and return"
-  (x > t.hi)
+  (x > t gethi)
     ifTrue: [
-      t.hi := x. 
-      ^x
+      t sethi: x. 
+      ^x.
   ].
-  (x < t.lo) 
+  (x < t getlo) 
     ifTrue: [
-    t.lo := x.
-    ^x
+    t setlo: x.
+    ^x.
   ].
-  (t.n >= 2)
-  ifTrue: [
-    t.sd := (t.m2/(t.n - 1 + 10e-32)) raisedTo 1/2.
-    ^x
-  ].
-  ^x.
-  !
+  (t getN >= 2)
+     ifTrue: [
+       t setSD: sqrt (t getm2/(t getN - 1 + 10e-32)).
+       ^x.
+     ]
+  
+  ^x!
   
   numDec: t hasX:x hasD:d 
   (x = '?')
     ifTrue: [ ^x ].
-  (t.n = 1)
+  (t getN = 1)
     ifTrue: [ ^x ].
-  t.n := t.n - 1.
-  d := x - tmu.
-  t.mu := t.mu - d/t.n.
-  t.m2 := t.m2 - d*(x- t.mu).
-  (t.n >= 2)
+  t setN: (t getN - 1).
+  d := x - t getMU.
+  t setMU: (t getMU - d/t getN).
+  t setm2: (t getm2 - d*(x- t getMU)).
+  (t getN >= 2)
     ifTrue: [
-      t.sd := (t.m2/(t.n - 1 + 10e-32))^0.5.
+      t setSD: sqrt (t getm2/(t getN - 1 + 10e-32) ).
       ^x.
     ].
-  ^x .
-  !
+  ^x!
+  
 !
   
   
