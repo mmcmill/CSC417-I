@@ -10,3 +10,8 @@
  num sd oo. "==> 3.06"
  num mu oo. "==> 7"
  num n  oo. "==> 20" !
+ 
+ 
+  FileStream fileIn: 'b4now.st' "yourcode" !
+  Collection goodB4Now!
+ 

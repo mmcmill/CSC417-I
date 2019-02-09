@@ -49,11 +49,12 @@ gethi
   ^hi!
 
 
-numInc: t hasX: x hasD:d 
+numInc: t hasX: x 
+  | d |
   (x = '?')
     ifTrue: [ ^x ].
   t setN: (t getN + 1).
-  d := x - t getMU.
+  d := (x - t getMU).
   t setMU: ( t getMU + (d/t getN)).
   t setm2: (t getm2 + d*(x - t getMU) ).
   "if x is greater than t.hi, then t.hi = x and return"
@@ -69,13 +70,14 @@ numInc: t hasX: x hasD:d
   ].
   (t getN >= 2)
      ifTrue: [
-       t setSD: sqrt (t getm2/(t getN - 1 + 10e-32)).
+       t setSD: (t getm2/(t getN - 1 + 10e-32)) sqrt.
        ^x.
-     ]
+     ].
   
   ^x!
   
-  numDec: t hasX:x hasD:d 
+  numDec: t hasX:x 
+  |d|
   (x = '?')
     ifTrue: [ ^x ].
   (t getN = 1)
@@ -86,11 +88,13 @@ numInc: t hasX: x hasD:d
   t setm2: (t getm2 - d*(x- t getMU)).
   (t getN >= 2)
     ifTrue: [
-      t setSD: sqrt (t getm2/(t getN - 1 + 10e-32) ).
+      t setSD: (t getm2/(t getN - 1 + 10e-32) ) sqrt.
       ^x.
     ].
   ^x!
+  
 
+"1b2: create "
 eject: aBlock 
     | newCollection |
     newCollection := self copyEmpty.
