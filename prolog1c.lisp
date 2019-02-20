@@ -1,6 +1,8 @@
-;  vim: set filetype=lisp tabstop=2 shiftwidth=2 expandtab : 
+#!/usr/bin/env clisp
+;;;; prolog1c.lisp
+;;;; vim: set filetype=lisp tabstop=2 shiftwidth=2 expandtab : 
 
-#|
+#| 
 
 Help, my Prolog is broken. At the end of this file is a lisp
 function called (test1) that runs when this file loads. e.g.
@@ -128,6 +130,30 @@ need to fix something inside `data0`.
      (push (cons (cdr ',con) ',ant)
            (gethash (car ',con) *rules*))))
 
+#|  (KNOWN '?X
+    '((#:?3044 . DEBBIE) (#:?3045 . DONALD) 
+      (?Y . #:?3044) (?X . #:?3045))) ==> DONALD
+|#
+;; Known x bindings function 
+;; Optional variable retval should have current last node at all times after initialization
+;; Possible to do without optional variable, but easier to keep track of
+(defun known (sym pairList &optional retval)
+  ; for each pairing in the list do
+  (dolist (a pairList) 
+    ; if the passed symbol matches the first symbol in the pairing
+    (if (equal (car a) sym)
+        ; the current last node must now be the second symbol in the pairing
+        ; unnecessary first statement
+        ; recursively call known where the symbol passed is now the current last node
+        ; this will see if the current last node is the last node overall or if there are more links
+        (progn
+        (setf retval (cdr a))  
+        (setf retval (known (cdr a) pairList retval)))))
+  ; return current last node - if the passed symbol does not match another pairing
+  ; then the current last node must have been the passed symbol at this point 
+  ; also kept track of by retval 
+  (return-from known retval))
+  
 (defun data0 ()
   (clrhash *rules*)
   (<- (= ?x ?x))
