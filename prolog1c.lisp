@@ -129,11 +129,7 @@ need to fix something inside `data0`.
   `(length
      (push (cons (cdr ',con) ',ant)
            (gethash (car ',con) *rules*))))
-
-#|  (KNOWN '?X
-    '((#:?3044 . DEBBIE) (#:?3045 . DONALD) 
-      (?Y . #:?3044) (?X . #:?3045))) ==> DONALD
-|#
+;------------------------ KNOWN -------------------------------------------------------
 ;; Known x bindings function 
 ;; Optional variable retval should have current last node at all times after initialization
 ;; Possible to do without optional variable, but easier to keep track of
@@ -153,7 +149,29 @@ need to fix something inside `data0`.
   ; then the current last node must have been the passed symbol at this point 
   ; also kept track of by retval 
   (return-from known retval))
-  
+;--------------------------------------------------------------------------------------
+
+;----------------------- HAS-VARS -----------------------------------------------------
+;; Has-vars function
+;; Optional variable retList should hold updated list to return
+;; Possible to do without optional variable but optional variables make recursion easy
+(defun has-vars (remlist &optional retlist)
+  ; for each element in the list passed (has already been assured to be a list)
+  (dolist (x remlist)
+    ; if the element in the passed list is itself a list
+    (if (listp x)
+        ; recursively call has-vars to add list nested elements to retlist
+        (setf retlist (append retlist (has-vars x)))
+        ; else if the element in the passed list starts with ?
+        (if (var? x)
+            ; add the element to the return list
+            (push x retlist))))
+  ; delete duplicate items in the list
+  (delete-duplicates retlist)
+  ; return the return list
+  retlist)
+;--------------------------------------------------------------------------------------
+
 (defun data0 ()
   (clrhash *rules*)
   (<- (= ?x ?x))
@@ -296,6 +314,5 @@ need to fix something inside `data0`.
   (sublis (mapcar (lambda (v) (cons v (gensym "?")))
                   (has-vars r))
           r))
-
 
 (test1)
