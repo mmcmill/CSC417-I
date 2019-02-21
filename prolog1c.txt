@@ -1,0 +1,96 @@
+1. Write a file prolog1c.txt that answers the following questions.
+
+1a. In LISP what is an association list?
+An association list (aka "a-list") is a list of key-value pairs, where each pair is an association. the pairs are stored in cons cells in format: ((key1 . value1) (key2 . value2))
+
+
+1b. What does the function `assoc` do:
+source: http://jtra.cz/stuff/lisp/sclr/assoc.html
+
+Syntax for assoc: item alist key(keyword) test(keyword)
+'assoc' searches a list for a cons cell that has the 'item' parameter as the 'car' or key in the cons cell.
+
+Example:
+      (assoc 'r '((a . b) (c . d) 
+                  (r . x) (s . y) 
+                  (r . z))) => (r . x)
+ 
+ In this example above, the item 'r' is being searched for in the a list. the function would return the first cons cell matched, so this would return (r . x)
+ 
+
+1c. What does the LISP 
+[mapcan](http://jtra.cz/stuff/lisp/sclr/mapcan.html)
+function do?  Gove am example of its use.
+
+syntax: fn lists(one or more) => list
+
+mapcan applies the function (fn) to all members of the list, then concatenates it into the list it returns. 
+
+example: (mapcan (lambda (x) (list (- x 10) 'x)) '(10 11 12 13)) => (0 1 2 3)
+
+1d. Give a small example of using LISP hash tables to (1) crete a
+hash table then (2) write something into that hash table then (3)
+read that value back.
+
+(1): 
+  (defparameter *hashTable* (make-hash-table))
+
+(2):
+  (setf (gethash 'x *hashTable*) "something")
+  
+(3):
+  (gethash 'x *hashTable*)
+
+1e What does the LISP "sublis" function do? Give
+an example.
+syntax: sublis alist tree
+
+sublis makes substitutions for objects in a tree.
+
+example:
+  (sublis '((x . 1) (f . -)) '(f x 2) => (- 1 2)
+
+1f. In Prolog, what is the role of the bindings variable "binds".
+binds is a list that holds the Prolog facts to be used.
+
+
+1g. There seems to be a missing function. The examples shown below
+use an `(= ?x ?x)` rule but there is no support code anywhere else
+for `=`. So how does `(= ?x ?x)` work?
+
+
+
+1h. What does "(gensym "?")" do?
+
+it generates a new symbol and uses "?" as the suffix. for example it oculd generate: ?1234
+
+1i. The following rules illustrates the need for variable renaming.
+Why is such renaming required? What could go wrong (with the 
+?x and ?y bindings) as our Prolog does inference over these two 
+rules.
+
+     (<- (child ?x ?y) (parent ?y ?x))
+     (<- (daughter ?y ?x) (and (child ?y ?x) (female ?y)))
+     
+Both rules are not exclusive. The ?x ?y could be defined in the first rule, and then the second rule is wrong if it uses the same. 
+
+Say you were looking that a person x was a child of y, and also a daughter of y.
+
+For example:
+  (child Anna Tom) (parent Tom Anna)
+  (daughter Tom Anna) (and (child Tom Anna) (female Tom))
+  
+What we wanted:
+  (child Anna Tom) (parent Tom Anna)
+  (daughter Anna Tom) (and (child Anna Tom) (female Anna))
+  
+
+1j. (HARD) The code for "prove" that handles conjunctions seem wrong.  Why
+does the "and" clause in "prove" use "reverse"? Write a comment in
+the "ands" function that explains why we needed that reverse.
+
+reverse is necessary in the "and" clause of "prove" to preserve right associativity of the "and" function. as each expression is moved to the list in reverse order, it maintains the right associativity. 
+example: 
+  (prove (and 1 2 3)) sends (3 2 1) and binds to ands
+  
+  the goals are (3 2 1), and will be checked from left to right. thus, the "ands" are processed as: 1 and (2 and 3).
