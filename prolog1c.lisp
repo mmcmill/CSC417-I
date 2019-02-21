@@ -262,6 +262,7 @@ need to fix something inside `data0`.
     (or   (ors         (cdr  expr)            binds))
     (not  (negation    (cadr expr)            binds))
     (do   (evals       (cadr expr)            binds))
+    (show (shows       (cadr  expr)            binds))
     (t    (prove1      (car  expr) (cdr expr) binds))))
 
 ;--------- --------- --------- --------- --------- --------- ---------
@@ -279,6 +280,9 @@ need to fix something inside `data0`.
 (defun negation (goal binds)
   (unless (prove goal binds)
     (list binds)))
+
+(defun show (expr)
+  (print `expr))
 
 (defun evals (expr binds)
   " turns e.g. (print (list ?a ?b)) into
