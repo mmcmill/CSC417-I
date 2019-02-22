@@ -264,7 +264,11 @@ need to fix something inside `data0`.
     (or   (ors         (cdr  expr)            binds))
     (not  (negation    (cadr expr)            binds))
     (do   (evals       (cadr expr)            binds))
-    (show (shows       (cadr  expr)            binds))
+    (show (shows       (cadr  expr)           binds))
+    (<    (less        (cdr   expr)           binds))
+    (>    (great       (cdr   expr)           binds))
+    (<=   (lesseq      (cdr   expr)           binds))
+    (>=   (greateq     (cdr   expr)           binds))
     (t    (prove1      (car  expr) (cdr expr) binds))))
 
 ;--------- --------- --------- --------- --------- --------- ---------
@@ -285,6 +289,18 @@ need to fix something inside `data0`.
 
 (defun show (expr)
   (print `expr))
+
+(defun great (expr binds)
+  (print (> (cdr expr) binds)))
+
+(defun less (expr)
+  (print (< (cdr expr) binds)))
+
+(defun lesseq (expr)
+  (print (<= (cdr expr) binds)))
+
+(defun greateq (expr)
+  (print (>= (cdr expr) binds)))
 
 (defun evals (expr binds)
   " turns e.g. (print (list ?a ?b)) into
