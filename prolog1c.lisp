@@ -202,7 +202,9 @@ need to fix something inside `data0`.
         (male ?x)))
   (<- (sibling ?x ?y) 
       (and (parent ?z ?x)
-           (parent ?z ?y))))
+           (parent ?z ?y)
+           ; easy fix, cant be sibling to yourself
+           (not (= ?x ?y)))))
 
 
 ;--------- --------- --------- --------- --------- --------- ---------
