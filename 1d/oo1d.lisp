@@ -1,5 +1,9 @@
 #!/usr/bin/env clisp
+<<<<<<< HEAD
 ; vim: set filetype=lisp tabstop=2 shiftwidth=2 expandtab :
+=======
+;  vim: set filetype=lisp tabstop=2 shiftwidth=2 expandtab :
+>>>>>>> bcc539f3827349e49660a088701e8d78abcdc76a
 
 #|
 In this assignment you will use the LISP macro system
@@ -237,16 +241,45 @@ TODO 2a. Define an object "cirle" with variables x,y
     (to hold the size of the circle). Add a method 
     "area" that returns 2 *pi*radius^2
 
-; run this to peek inside circle
-'(xpand (circle))
+"
+; Really confused about the commenting out and in on this
 
+; 2A ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defclass circle ()
+  (
+    (x  :reader get-x :writer set-x)
+    (y  :reader get-y :writer set-y)
+    (radius :reader get-radius  :writer set-radius)
+  )
+)
+
+; Run this to peek inside circle
+'(xpand (circle))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+"
 TODO 2b. Define an object "rectangle" with variables x1,x2,y1,y2
     that all default value of 0. Add
     a method "area" that returns the area of that rectangle
+"
+; 2B ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defclass rectangle ()
+  (
+    (x1  :reader get-x1 :writer set-x1)
+    (x2  :reader get-x2 :writer set-x2)
+    (y1  :reader get-y1 :writer set-y1)
+    (y2  :reader get-y2 :writer set-y2)
+  )
+)
+
+(defmethod area ((object rectangle))
+  (* (abs(- (get-x2 object) (get-x1 object))) (abs(- (get-y2 object) (get-y1 object))))
+)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+"
 TODO 2c. Show the output from the following test
-
-|#
-
+"
 (defun polymorphism()
   (let ((sum 0)
         (all (list (circle :radius 1) 
@@ -259,7 +292,6 @@ TODO 2c. Show the output from the following test
 ; to run, uncomment the following
 '(polymorphism)
 
-#|
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Inheritance
 
