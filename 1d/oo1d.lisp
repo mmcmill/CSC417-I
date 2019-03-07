@@ -88,7 +88,7 @@ that can create an "account".
              (interest ()
                        (incf balance
                              (* interest-rate balance)))))
-    
+
 "defthing" creates a function that returns a lambda body.
 This lambda body holds a case statement which, when called
 with a message, returns another lambda body that can do something (run
@@ -189,7 +189,7 @@ TODO 1c. Implement "data-as-case":
 
 
 ; but first, uncomment this code
-'(defthing
+(defthing
   account
   :has  ((name) (balance 0) (interest-rate .05))
   :does ((withdraw (amt)
@@ -206,7 +206,7 @@ TODO 1e. Show the result of expanding you account.
 |#
 
 ; uncomment this to see what an account looks like
-'(xpand (account))
+(xpand (account))
 
 #|
 1f. Fix "withdraw" in "account" such that if you withdraw more than
@@ -229,7 +229,7 @@ TODO 1f.. Show the output from the following function
 
 
 ; to run encapuatlion, uncomment the following
-'(encapsulation)
+(encapsulation)
 
 #|
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
