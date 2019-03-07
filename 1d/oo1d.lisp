@@ -239,46 +239,29 @@ TODO 2a. Define an object "cirle" with variables x,y
     (for  the center of the circle) and radius 
     (to hold the size of the circle). Add a method 
     "area" that returns 2 *pi*radius^2
-
-"
-; Really confused about the commenting out and in on this
-
+|#
 ; 2A ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defclass circle ()
-  (
-    (x  :reader get-x :writer set-x)
-    (y  :reader get-y :writer set-y)
-    (radius :reader get-radius  :writer set-radius)
-  )
-)
+(defthing
+  circle
+  :has  ((x) (y) (radius))
+  :does ((area () (* 2 (* (* radius radius) 3.14)))))
 
 ; Run this to peek inside circle
-'(xpand (circle))
+(xpand (circle))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-"
-TODO 2b. Define an object "rectangle" with variables x1,x2,y1,y2
-    that all default value of 0. Add
-    a method "area" that returns the area of that rectangle
-"
+; TODO 2b. Define an object "rectangle" with variables x1,x2,y1,y2
+;     that all default value of 0. Add
+;     a method "area" that returns the area of that rectangle
+
 ; 2B ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defclass rectangle ()
-  (
-    (x1  :reader get-x1 :writer set-x1)
-    (x2  :reader get-x2 :writer set-x2)
-    (y1  :reader get-y1 :writer set-y1)
-    (y2  :reader get-y2 :writer set-y2)
-  )
-)
-
-(defmethod area ((object rectangle))
-  (* (abs(- (get-x2 object) (get-x1 object))) (abs(- (get-y2 object) (get-y1 object))))
-)
+(defthing
+  rectangle
+  :has  ((x1 0) (x2 0) (y1 0) (y2 0))
+  :does ((area () (* (- x2 x1) (- y2 y1)))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; TODO 2c. Show the output from the following test
 
-"
-TODO 2c. Show the output from the following test
-"
 (defun polymorphism()
   (let ((sum 0)
         (all (list (circle :radius 1) 
@@ -289,20 +272,20 @@ TODO 2c. Show the output from the following test
     (print `(polymorphism ,sum))))
 
 ; to run, uncomment the following
-'(polymorphism)
+(polymorphism)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Inheritance
 
 
-3. To  make inheritance work, we accumulate the "defthing" specs.
-So when a subclass is created, we include into its definition all
-its details from the superclass.
+; 3. To  make inheritance work, we accumulate the "defthing" specs.
+; So when a subclass is created, we include into its definition all
+; its details from the superclass.
 
-To store that accumulation, use a hashtable that stores "about"
-structs.
+; To store that accumulation, use a hashtable that stores "about"
+; structs.
 
-|#
+
 (defvar *meta* (make-hash-table))
 
 (defstruct about has does )
