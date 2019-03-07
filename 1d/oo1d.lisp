@@ -1,4 +1,5 @@
-;  vim: set filetype=lisp tabstop=2 shiftwidth=2 expandtab :
+#!/usr/bin/env clisp
+; vim: set filetype=lisp tabstop=2 shiftwidth=2 expandtab :
 
 #|
 In this assignment you will use the LISP macro system
@@ -162,7 +163,16 @@ TODO 1c. Implement "data-as-case":
     ((NAME (LAMBDA NIL NAME)) 
      (BALANCE (LAMBDA NIL BALANCE)) 
      (INTEREST-RATE (LAMBDA NIL INTEREST-RATE)))
-    
+|#
+
+(defun datas-as-case (paramList &optional retlist)
+   (dolist (a paramList)
+     (setf retlist (append retlist (list (list a (list 'lambda 'nil a))))))
+  (return-from datas-as-case retlist))
+
+
+
+#|
 1d. Implement  "methods-as-case"
 
      (methods-as-case '((more (x) (+ x 1)) (less (x) (- x 1))))
@@ -385,3 +395,5 @@ object
    )))
 
 '(meta)
+
+(print (datas-as-case '(name balance interest-rate)))
