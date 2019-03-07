@@ -1,9 +1,6 @@
 #!/usr/bin/env clisp
-<<<<<<< HEAD
-; vim: set filetype=lisp tabstop=2 shiftwidth=2 expandtab :
-=======
-;  vim: set filetype=lisp tabstop=2 shiftwidth=2 expandtab :
->>>>>>> bcc539f3827349e49660a088701e8d78abcdc76a
+
+;vim: set filetype=lisp tabstop=2 shiftwidth=2 expandtab :
 
 #|
 In this assignment you will use the LISP macro system
@@ -174,8 +171,6 @@ TODO 1c. Implement "data-as-case":
      (setf retlist (append retlist (list (list a (list 'lambda 'nil a))))))
   (return-from datas-as-case retlist))
 
-
-
 #|
 1d. Implement  "methods-as-case"
 
@@ -183,11 +178,15 @@ TODO 1c. Implement "data-as-case":
      ==>
      ((MORE (LAMBDA (X) (+ X 1))) 
       (LESS (LAMBDA (X) (- X 1))))
-     
+|#     
+(defun methods-as-case (paramList &optional retlist)
+  (dolist (a paramList)
+    (setf retlist (append retlist (list (list (car a) (append (list 'lambda) (cdr a)))))))
+  (return-from methods-as-case retlist))
 
-Now that that is working, the following should
-expand nicely:
-|#
+;Now that that is working, the following should
+;expand nicely:
+
 
 ; but first, uncomment this code
 '(defthing
@@ -427,5 +426,3 @@ object
    )))
 
 '(meta)
-
-(print (datas-as-case '(name balance interest-rate)))
