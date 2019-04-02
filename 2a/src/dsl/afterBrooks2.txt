@@ -1,0 +1,2 @@
+?t, $atleast, >d, $done_percent, <ep, $learning_curve, <np, $nprod, $optimism, $pomposity, $productivity_exp, $productivity_new, $r, $to, $ts, ?verbose
+1, 4.33, 100, 0.94, 8.16, 84.9, 13.84, 7.65, 25.58, 13.44, 1.26, 0.5, 735.93, 76.61, 65.51, 0.0
