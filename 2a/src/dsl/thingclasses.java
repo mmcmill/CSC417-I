@@ -1,20 +1,15 @@
-import java.lang.math.*;
-
-
-class Thing {
+abstract class Thing {
   int init = 0;
   int lo = 0;
   int hi = 100;
   String txt = "thing";
   
   Thing(int init, int lo, int hi, String txt) {
-     if (init != null) {
+     if (init > 0) {
       this.init = init;
-    } else if (lo != null){
+    } else if (lo > 0){
       this.init = lo;
-    } else {
-      this.init = 
-     }
+    }
     
     setLo(lo);
     setHi(hi);
@@ -23,12 +18,12 @@ class Thing {
   }
   
   void setLo(int lo){
-    // null is allowed, since the class has a default value. makes the argument optional.
-    if (lo == null) { 
-      return;
-    }
     if (lo < 0) {
       throw new IllegalArgumentException("lo cannot be negative");
+    }
+    // zero is default value.
+    if (lo == 0) { 
+      return;
     }
     
     this.lo = lo;
@@ -38,12 +33,13 @@ class Thing {
   }
   
   void setHi(int hi){
-    // null is allowed, since the class has a default value. makes the argument optional.
-    if (hi == null) { 
-      return;
-    }
     if (hi < 0) {
       throw new IllegalArgumentException("hi cannot be negative");
+    }
+    
+   // zero is default value
+    if (hi == 0) { 
+      return;
     }
     
     this.hi = hi;
@@ -64,4 +60,60 @@ class Thing {
   
   abstract int rank();
   
+}
+
+class Percent extends Thing {
+
+    static int PERCENT_RANK = 4;
+    
+    Percent ( int init, int lo, int hi, String txt ) {
+        super( init, lo, hi, txt );
+    }
+
+    @Override
+    int rank () {
+        return PERCENT_RANK;
+    }  
+}
+
+class Flow extends Thing {
+
+    static int FLOW_RANK = 3;
+    
+    Flow ( int init, int lo, int hi, String txt ) {
+        super( init, lo, hi, txt );
+    }
+
+    @Override
+    int rank () {
+        return FLOW_RANK;
+    }  
+}
+
+class Stock extends Thing {
+
+    static int STOCK_RANK = 2;
+    
+    Stock ( int init, int lo, int hi, String txt ) {
+        super( init, lo, hi, txt );
+    }
+
+    @Override
+    int rank () {
+        return STOCK_RANK;
+    }  
+}
+
+class Aux extends Thing {
+
+    static int AUX_RANK = 1;
+    
+    Aux ( int init, int lo, int hi, String txt ) {
+        super( init, lo, hi, txt );
+    }
+
+    @Override
+    int rank () {
+        return AUX_RANK;
+    }  
 }
