@@ -1,8 +1,8 @@
 public abstract class Thing implements Comparable<Thing> {
-    int    init = 0;
-    int    lo   = 0;
-    int    hi   = 100;
-    String txt  = "thing";
+    protected int    init = 0;
+    protected int    lo   = 0;
+    protected int    hi   = 100;
+    protected String txt  = "thing";
 
     Thing ( final int init, final int lo, final int hi, final String txt ) {
         if ( init > 0 ) {
@@ -14,14 +14,14 @@ public abstract class Thing implements Comparable<Thing> {
 
         setLo( lo );
         setHi( hi );
-        setTxt( txt );
+        setTxt( txt );		
 
     }
 
     void setLo ( final int lo ) {
         if ( lo < 0 ) {
             throw new IllegalArgumentException( "lo cannot be negative" );
-        }
+        } 
         // zero is default value.
         if ( lo == 0 ) {
             return;
@@ -36,7 +36,7 @@ public abstract class Thing implements Comparable<Thing> {
     void setHi ( final int hi ) {
         if ( hi < 0 ) {
             throw new IllegalArgumentException( "hi cannot be negative" );
-        }
+        } 
 
         // zero is default value
         if ( hi == 0 ) {
@@ -52,6 +52,10 @@ public abstract class Thing implements Comparable<Thing> {
     void setTxt ( final String txt ) {
         if ( txt != null ) {
             this.txt = txt;
+        } else if (txt.equals("")) {
+        	throw new IllegalArgumentException("txt cannot be empty");
+        } else {
+        	throw new IllegalArgumentException("txt cannot be null");
         }
     }
 
@@ -71,6 +75,10 @@ class Percent extends Thing {
         super( init, lo, hi, txt );
     }
 
+    Percent (String txt) {
+    	super(super.init, super,lo, super.hi, txt);
+    }
+
     @Override
     int rank () {
         return PERCENT_RANK;
@@ -78,6 +86,10 @@ class Percent extends Thing {
 
 	@Override
 	public int compareTo(Thing otherThing) {
+		if (otherThing == null) {
+			throw new IllegalArgumentException("comparison with null");
+		}
+
 		if (PERCENT_RANK < otherThing.rank())
 			return -1;
 		else if (PERCENT_RANK > otherThing.rank())
@@ -96,6 +108,10 @@ class Flow extends Thing {
         super( init, lo, hi, txt );
     }
 
+    Flow (String txt) {
+    	super(super.init, super.lo, super.hi, txt);
+    }
+
     @Override
     int rank () {
         return FLOW_RANK;
@@ -103,6 +119,10 @@ class Flow extends Thing {
     
 	@Override
 	public int compareTo(Thing otherThing) {
+		if (otherThing == null) {
+			throw new IllegalArgumentException("comparison with null");
+		}
+
 		if (FLOW_RANK < otherThing.rank())
 			return -1;
 		else if (FLOW_RANK > otherThing.rank())
@@ -120,6 +140,11 @@ class Stock extends Thing {
         super( init, lo, hi, txt );
     }
 
+    Stock(String txt, int x) {
+    	// Not sure if x is lo or hi
+    	super(super.init, super.lo, x, txt);
+    }
+
     @Override
     int rank () {
         return STOCK_RANK;
@@ -127,6 +152,10 @@ class Stock extends Thing {
     
 	@Override
 	public int compareTo(Thing otherThing) {
+		if (otherThing == null) {
+			throw new IllegalArgumentException("comparison with null");
+		}
+
 		if (STOCK_RANK < otherThing.rank())
 			return -1;
 		else if (STOCK_RANK > otherThing.rank())
@@ -144,6 +173,11 @@ class Aux extends Thing {
         super( init, lo, hi, txt );
     }
 
+    Aux (String txt, int x) {
+    	// Not sure if x is lo or hi
+    	super (super.init, super.lo, x, txt);
+    }
+
     @Override
     int rank () {
         return AUX_RANK;
@@ -151,6 +185,10 @@ class Aux extends Thing {
     
 	@Override
 	public int compareTo(Thing otherThing) {
+		if (otherThing == null) {
+			throw new IllegalArgumentException("comparison with null");
+		}
+
 		if (AUX_RANK < otherThing.rank())
 			return -1;
 		else if (AUX_RANK > otherThing.rank())
