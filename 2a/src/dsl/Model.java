@@ -4,11 +4,16 @@ import java.util.List;
 
 public class Model {
 	// "Genereic" just for the time being
-	private ArrayList<Object> params;
+	// private ArrayList<Object> params;
+	private HashMap<String, Double> params;
 	private Object head;
 
 	public Model(ArrayList<Object> params) {
 		this.params = params;
+	}
+
+	public HashMap<String, Double> getParams() {
+		return params;
 	}
 
 	public void step() {
@@ -24,7 +29,6 @@ public class Model {
 		verbose = false;
 		boolean changeable = true;
 
-		// Do lots of confusing stuff here
 		Things have = this.have();
 		int t = 0;
 		HashMap<String, Thing> b4 = have.payload(/*current payload*/);
