@@ -87,6 +87,10 @@ class Percent extends Thing {
     Percent (String txt) {
     	super( txt );
     }
+    
+    Percent (String txt, int x) {
+    	super ( txt, x);
+    }
 
     @Override
     int rank () {
@@ -183,6 +187,10 @@ class Aux extends Thing {
 
     Aux (String txt, int x) {
     	super ( txt, x );
+    }
+    
+    Aux (String txt) {
+    	super ( txt );
     }
 
     @Override

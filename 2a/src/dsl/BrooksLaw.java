@@ -9,17 +9,17 @@ public class BrooksLaw extends Model {
 	public Things have(Model i) {
 		Flow assimilationRate = 			new Flow("assimilationRate");
 		Percent communicationOverhead = 	new Percent("communicationOverhead");
-		Stock developedSoftware = 			new Stock("developedSoftware", i.getParams().get("d"));
-		Stock experiencedPeople = 			new Stock("experiencedPeople", (int)(i.getParams().get("ep")));
+		Stock developedSoftware = 			new Stock("developedSoftware", i.getParams().get("d").intValue());
+		Stock experiencedPeople = 			new Stock("experiencedPeople", (i.getParams().get("ep")).intValue());
 		Aux experiencedPeopleNeeded2Train =	new Aux("experiencedPeopleNeeded2Train");
-		Aux nominalProductivity = 			new Aux("nominalProductivity", i.getParams().get("nprod"));
-		Stock newPersonnel = 				new Stock("newPersonnel", (int)(i.getParams().get("np")));
+		Aux nominalProductivity = 			new Aux("nominalProductivity", i.getParams().get("nprod").intValue());
+		Stock newPersonnel = 				new Stock("newPersonnel", (int)(i.getParams().get("np")).intValue());
 		Flow personnelAllocationRate = 		new Flow("personnelAllocationRate");
 		Aux plannedSoftware = 				new Aux("plannedSoftware");
 		Flow softwareDevelopmentRate = 		new Flow("softwareDevelopmentRate");
-		Aux teamSize = 						new Aux("teamSize", i.getParams().get("ts"));
-		Percent trainingOverhead = 			new Percent("trainingOverhead", i.getParams().get("to"));
-		Stock requirements = 				new Stock("requirements", i.getParams().get("r"));
+		Aux teamSize = 						new Aux("teamSize", i.getParams().get("ts").intValue());
+		Percent trainingOverhead = 			new Percent("trainingOverhead", i.getParams().get("to").intValue());
+		Stock requirements = 				new Stock("requirements", i.getParams().get("r").intValue());
 	}
 
 	public Double commOverhead(Double x) {
