@@ -11,7 +11,7 @@ public class Things {
     // String is the name of the things in order by the rank of the thing
     ArrayList<String>      order;
 
-    Things ( final HashMap<String, Thing> things ) {
+    public Things ( final HashMap<String, Thing> things ) {
         if ( things == null ) {
             throw new IllegalArgumentException( "Things cannot be null" );
         }
@@ -39,17 +39,19 @@ public class Things {
         return null;
     }
 
-    HashMap<String, Thing> payload ( final HashMap<String, Thing> old ) {
+    public HashMap<String, Thing> payload ( final HashMap<String, Thing> old ) {
         final HashMap<String, Thing> out = new HashMap<String, Thing>();
+        
         for ( final String key : this.order ) {
-            out.put( key, this.things.get( key ).init );
+            out.put( key, this.things.get( key ) );
         }
 
         if ( old != null ) {
             for ( final Entry<String, Thing> oldEntry : old.entrySet() ) {
                 final String key = oldEntry.getKey();
 
-                out.put( key, things.get( key ).restrain( old.get( key ) ) );
+                //
+                out.put( key, things.get( key ).restrain(old.get( key )));
             }
         }
 
@@ -57,7 +59,7 @@ public class Things {
 
     }
 
-    ArrayList<Thing> toList () {
+    public ArrayList<Thing> toList () {
         final ArrayList<Thing> listThings = new ArrayList<Thing>();
         for ( final String key : order ) {
             listThings.add( things.get( key ) );

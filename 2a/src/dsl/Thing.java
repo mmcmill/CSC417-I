@@ -1,4 +1,4 @@
-abstract class Thing implements Comparable<Thing> {
+public abstract class Thing implements Comparable<Thing> {
     int    init = 0;
     int    lo   = 0;
     int    hi   = 100;
@@ -61,18 +61,6 @@ abstract class Thing implements Comparable<Thing> {
 
     abstract int rank ();
 
-    @Override
-    public int compare ( final Thing o1, final Thing o2 ) {
-        if ( o1.rank() < o2.rank() ) {
-            return -1;
-        }
-        else if ( o1.rank() > o2.rank() ) {
-            return 1;
-        }
-        else {
-            return 0;
-        }
-    }
 }
 
 class Percent extends Thing {
@@ -88,6 +76,16 @@ class Percent extends Thing {
         return PERCENT_RANK;
     }
 
+	@Override
+	public int compareTo(Thing otherThing) {
+		if (PERCENT_RANK < otherThing.rank())
+			return -1;
+		else if (PERCENT_RANK > otherThing.rank())
+			return 1;
+		else
+			return 0;
+	}
+
 }
 
 class Flow extends Thing {
@@ -102,6 +100,16 @@ class Flow extends Thing {
     int rank () {
         return FLOW_RANK;
     }
+    
+	@Override
+	public int compareTo(Thing otherThing) {
+		if (FLOW_RANK < otherThing.rank())
+			return -1;
+		else if (FLOW_RANK > otherThing.rank())
+			return 1;
+		else
+			return 0;
+	}
 }
 
 class Stock extends Thing {
@@ -116,6 +124,16 @@ class Stock extends Thing {
     int rank () {
         return STOCK_RANK;
     }
+    
+	@Override
+	public int compareTo(Thing otherThing) {
+		if (STOCK_RANK < otherThing.rank())
+			return -1;
+		else if (STOCK_RANK > otherThing.rank())
+			return 1;
+		else
+			return 0;
+	}
 }
 
 class Aux extends Thing {
@@ -130,4 +148,14 @@ class Aux extends Thing {
     int rank () {
         return AUX_RANK;
     }
+    
+	@Override
+	public int compareTo(Thing otherThing) {
+		if (AUX_RANK < otherThing.rank())
+			return -1;
+		else if (AUX_RANK > otherThing.rank())
+			return 1;
+		else
+			return 0;
+	}
 }
