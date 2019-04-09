@@ -1,4 +1,5 @@
 public abstract class Thing implements Comparable<Thing> {
+	//understand init
     protected double    init = 0;
     protected int    	lo   = 0;
     protected int   	hi   = 100;
@@ -68,6 +69,8 @@ public abstract class Thing implements Comparable<Thing> {
         }
     }
 
+    //make static
+    //change to input Thing, restrain the lo with x and return the edited Thing
     int restrain ( final int x ) {
         return Math.max( this.lo, Math.min( this.hi, x ) );
     }

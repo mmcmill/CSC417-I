@@ -1,8 +1,11 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class BrooksLaw extends Model {
 	HashMap<String, Double> params;
 
 	public BrooksLaw (HashMap<String, Double> params) {
-		super(params);
+		super(new ArrayList<Double>(params.values()));
 		this.params = params;
 	}
 
@@ -20,8 +23,13 @@ public class BrooksLaw extends Model {
 		Aux teamSize = 						new Aux("teamSize", i.getParams().get("ts").intValue());
 		Percent trainingOverhead = 			new Percent("trainingOverhead", i.getParams().get("to").intValue());
 		Stock requirements = 				new Stock("requirements", i.getParams().get("r").intValue());
+		
+		//add a return
+		//take all these, turn into hashmap, return
 	}
 
+	//look into commOverhead
+	//co #1
 	public Double commOverhead(Double x) {
 		// Not sure what 'x' is supposed to be yet
 
@@ -33,11 +41,14 @@ public class BrooksLaw extends Model {
 		return (this.params.get("pomposity") * (Math.pow(myTeam, 2) + Math.pow(others, 2)));
 	}
 
-	public void step(int dt, int t, HashMap<String, Double> i, HashMap<String, Double> j) {
+	//change names in step
+	//take doubles out of thing instead of having the hashmap string-thing which was
+	//the case when this was implemented
+	public void step(int dt, int t, HashMap<String, Thing> i, HashMap<String, Thing> j) {
 		j.put("aR", i.get("np") / this.params.get("learning_curve"));
 		j.put("ps", this.params.get("optimism") * t);
 		j.put("co", commOverhead(i.get("ep") + i.get("np")));
-		j.put("paR", ((i.get("ps") - i.get("d") < this.params.get("atleast"))  && (t < (int)self.params.get("done_percent") * t / 100 )) ? 6 : 0);
+		j.put("paR", ((i.get("ps") - i.get("d") < this.params.get("atleast"))  && (t < this.params.get("done_percent") * t / 100 )) ? 6 : 0);
 		j.put("sdR", i.get("nprod") * (1 - i.get("co") / 100) * (this.params.get("sDR_param1" * i.get("np") + this.params.get("sDR_param2") * (i.get("ep") - i.get("ept")))));
 		j.put("ept", i.get("np") * i.get("to") / 100);
 		j.put("ep", j.get("ep") + i.get("aR") * dt);

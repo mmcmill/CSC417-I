@@ -45,12 +45,11 @@ public class Things {
         for ( final String key : this.order ) {
             out.put( key, this.things.get( key ) );
         }
+        // possibly just return HashMap parameter
 
         if ( old != null ) {
             for ( final Entry<String, Thing> oldEntry : old.entrySet() ) {
                 final String key = oldEntry.getKey();
-
-                //
                 out.put( key, things.get( key ).restrain(old.get( key )));
             }
         }

@@ -8,7 +8,7 @@ public class Model {
 	private HashMap<String, Double> params;
 	private Object head;
 
-	public Model(ArrayList<Object> params) {
+	public Model(ArrayList<Double> params) {
 		this.params = params;
 	}
 
@@ -50,6 +50,9 @@ public class Model {
 			// Probably will change to user Logger
 			System.out.println(head);
 		}
+		
+		//need to add input operations to handle the dictionary input from beforebrooks2.txt
+		//send all input to the for loop for processing
 
 		for (int i = 0; i < timeMax; i++) {
 			HashMap<String, Thing> now = have.payload(b4);
@@ -59,9 +62,10 @@ public class Model {
 			
 			// I believe this is a list of map values headed by the time t
 			// I have no clue why this is useful though. 
-			// If the mapping changes from Thing to thing this needs to change as well
+			// If the mapping changes from Thing to int this needs to change as well
 			// but to Integer instead of int for the List -dsmicken
 			
+			//an arraylist of all the "init"s in the "Things" : an arraylist of doubles
 			List<Thing> vals = new ArrayList<Thing>(now.values());
 			vals.add(0, i);
 
@@ -70,33 +74,22 @@ public class Model {
 			// not sure where you are getting this. I don't see anything like this
 			// on the github page. - dsmicken
 			
+			/*
 			theRest = have.asList(now);
 			for (int j = 0; j < theRest.length; j++) {
 				vals.append(theRest[j]);
 			}
-      
+      		*/
+			
 			b4 = now;
 
-			// another situation where the mapping would need to be to an int instead of a Thing
-			// also I'm not really sure what this is supposed to do, I think It just needs to print
-			// the last 
-			if (vals.get(2) >= 100) System.out.println("vals rounded to 2 decimals places");
-			if (verbose) System.out.println("vals rounded to 2 decimal places");
-
-			// I think this should list all contents of val which appear to not be ints
-			// anymore but instead doubles. Which would make sense if Thing was supposed to hold
-			// init instead. 
-			if (i == timeMax) System.out.println("vals rounded to 2 decimal places");
-			
 			// Possible solution for the above statement ^ comma delimeted right now, not sure if it's needed
-			/*
-			if (i == timeMax) {
+			if (verbose || i == timeMax) {
 				// starts at 1 because time is at 0
 				for (int j = 1; j <= vals.size(); j++) {
 					System.out.printf("%.2f, ", vals.get(j));				
 				}
 			}
-			*/
 		}
 	}
 }
