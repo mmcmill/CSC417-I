@@ -39,14 +39,14 @@ public class Things {
         return null;
     }
 
-    HashMap<String, Integer> payload ( final HashMap<String, Integer> old ) {
-        final HashMap<String, Integer> out = new HashMap<String, Integer>();
+    HashMap<String, Thing> payload ( final HashMap<String, Thing> old ) {
+        final HashMap<String, Thing> out = new HashMap<String, Thing>();
         for ( final String key : this.order ) {
             out.put( key, this.things.get( key ).init );
         }
 
         if ( old != null ) {
-            for ( final Entry<String, Integer> oldEntry : old.entrySet() ) {
+            for ( final Entry<String, Thing> oldEntry : old.entrySet() ) {
                 final String key = oldEntry.getKey();
 
                 out.put( key, things.get( key ).restrain( old.get( key ) ) );

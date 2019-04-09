@@ -17,34 +17,47 @@ public class Model {
 		throw new UnsupportedOperationException("have must be implemented in subclass");
 	}
 
-	public void payload() {
-		// TODO
-	}
-
-	public void run(Object o, int dt, int timeMax, boolean printHead, boolean verbose) {
+	public void run(int dt, int timeMax, boolean printHead, boolean verbose) {
 		printHead = true;
 		verbose = false;
 		changeable = true;
 
 		// Do lots of confusing stuff here
-
+    Things have = this.have();
+    int t = 0;
+    HashMap<String, Thing> b4 = have.payload();
+     ArrayList<String> head = new ArrayList<String>();
+    
+    head.add("?t");
+    
+    for (String col : have.order) {
+      if (col.equals("d")) {
+        head.add(">d");
+      } else if (col.equals("ep") || col.equals("np")){
+        head.add("<"+col);
+      } else {
+        head.add("$"+col);
+      }
+    }
+    
 		if (printHead) {
 			// Probably will change to user Logger
 			System.out.println(head);
 		}
 
 		for (int i = 0; i < timeMax; i++) {
-			now = o.have().payload(b4);
-			now = o.step(dt, i, b4, now);
-			now = o.have().payload(now);
+			HashMap<String, Thing> now = have.payload(b4);
+			this.step(dt, i, b4, now);
+      
+      // what is vals supposed to be? - mmcmill
 			vals = i;
 
-			theRest = o.have().asList(now, o.params, changeable);
+      // unsure what this "theRest" section is for - mmcmill
+			theRest = have.asList(now);
 			for (int j = 0; j < theRest.length; j++) {
 				vals.append(theRest[j]);
 			}
-
-			i += dt;
+      
 			b4 = now;
 
 			if (vals[2] >= 100) System.out.println("vals rounded to 2 decimals places");
