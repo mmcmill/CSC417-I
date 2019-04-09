@@ -1,10 +1,10 @@
 public abstract class Thing implements Comparable<Thing> {
-    protected int    init = 0;
-    protected int    lo   = 0;
-    protected int    hi   = 100;
-    protected String txt  = "thing";
+    protected double    init = 0;
+    protected int    	lo   = 0;
+    protected int   	hi   = 100;
+    protected String 	txt  = "thing";
 
-    Thing ( final int init, final int lo, final int hi, final String txt ) {
+    Thing ( final double init, final int lo, final int hi, final String txt ) {
         if ( init > 0 ) {
             this.init = init;
         }
@@ -16,6 +16,15 @@ public abstract class Thing implements Comparable<Thing> {
         setHi( hi );
         setTxt( txt );		
 
+    }
+    
+    Thing (String txt) {
+    	setTxt( txt );
+    }
+    
+    Thing (String txt, int x) {
+    	setTxt( txt );
+    	setHi( hi );
     }
 
     void setLo ( final int lo ) {
@@ -29,7 +38,7 @@ public abstract class Thing implements Comparable<Thing> {
 
         this.lo = lo;
         if ( this.init >= this.lo ) {
-            this.lo = this.init;
+            this.lo = (int) this.init;
         }
     }
 
@@ -45,7 +54,7 @@ public abstract class Thing implements Comparable<Thing> {
 
         this.hi = hi;
         if ( this.init >= this.hi ) {
-            this.lo = this.init * 2;
+            this.lo = (int) this.init * 2;
         }
     }
 
@@ -74,9 +83,9 @@ class Percent extends Thing {
     Percent ( final int init, final int lo, final int hi, final String txt ) {
         super( init, lo, hi, txt );
     }
-
+    
     Percent (String txt) {
-    	super(super.init, super,lo, super.hi, txt);
+    	super( txt );
     }
 
     @Override
@@ -109,7 +118,7 @@ class Flow extends Thing {
     }
 
     Flow (String txt) {
-    	super(super.init, super.lo, super.hi, txt);
+    	super( txt );
     }
 
     @Override
@@ -141,8 +150,7 @@ class Stock extends Thing {
     }
 
     Stock(String txt, int x) {
-    	// Not sure if x is lo or hi
-    	super(super.init, super.lo, x, txt);
+    	super(txt, x);
     }
 
     @Override
@@ -174,8 +182,7 @@ class Aux extends Thing {
     }
 
     Aux (String txt, int x) {
-    	// Not sure if x is lo or hi
-    	super (super.init, super.lo, x, txt);
+    	super ( txt, x );
     }
 
     @Override
