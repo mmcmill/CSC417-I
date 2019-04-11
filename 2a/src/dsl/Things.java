@@ -1,8 +1,7 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 public class Things {
 
@@ -15,16 +14,37 @@ public class Things {
         if ( things == null ) {
             throw new IllegalArgumentException( "Things cannot be null" );
         }
+        
         this.things = things;
-        // sort the things by rank, using comparator in Thing
-        final SortedSet<Thing> sortedByRank = new TreeSet<Thing>( this.things.values() );
+        
+        order = new ArrayList<String>();
 
-        for ( final Thing value : sortedByRank ) {
-            order.add( getKey( value ) );
+        ArrayList<String> keyList = 
+        		new ArrayList<String>(Arrays.asList(things.keySet().toArray(new String[things.keySet().size()])));
+        
+        System.out.println("KeyList size: " + keyList.size());
+        for (String key : keyList) {
+        	if (order.size() == 0)
+        		order.add(key);
+        	else { 
+        		for (int j = 0; j < order.size(); j++) {
+        			if (j == order.size() - 1) {
+        				order.add(order.size(), key);
+        				break;
+        			}
+        			else if (things.get(key).rank <= things.get(order.get(j)).rank) {
+        			order.add(j, key);
+        			break;
+        			}
+        		} 
+        	}
         }
-        // set the name for the things to be the keys
-        for ( final String key : this.order ) {
-            this.things.get( key ).setTxt( key );
+        System.out.println("order size: " + order.size());
+    }
+    
+    public void printOrder() {
+        for (String key : order) {
+        	System.out.println(key + " " + things.get(key).rank);
         }
     }
 

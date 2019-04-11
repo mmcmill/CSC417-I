@@ -40,8 +40,8 @@ public class BrooksLaw extends Model {
 		things.put("r", requirements);
 		
 		return new Things(things);
-	}
-
+	} }
+/*
 	//look into commOverhead
 	//co #1
 	public Double commOverhead(Double x) {
@@ -76,4 +76,4 @@ public class BrooksLaw extends Model {
 		ArrayList<Object> inputList = inputThings();
 		HashMap<String, Thing> initMap = createInitHashMap(inputList);
 	}
-}
+}*/

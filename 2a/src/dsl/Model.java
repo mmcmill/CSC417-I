@@ -23,8 +23,8 @@ public class Model {
 
 	public void have() {
 		throw new UnsupportedOperationException("have must be implemented in subclass");
-	}
-
+	} }
+/*
 	public void run(int dt, int timeMax, boolean printHead, boolean verbose) {
 		
 		printHead = true;
@@ -80,7 +80,7 @@ public class Model {
 			for (int j = 0; j < theRest.length; j++) {
 				vals.append(theRest[j]);
 			}
-      		*/
+      		
 			
 			b4 = now;
 
@@ -93,4 +93,4 @@ public class Model {
 			}
 		}
 	}
-}
+}*/
