@@ -1,9 +1,12 @@
-public abstract class Thing implements Comparable<Thing> {
-	//understand init
+
+
+public class Thing {
+
     protected double    init = 0;
     protected int    	lo   = 0;
     protected int   	hi   = 100;
     protected String 	txt  = "thing";
+    protected int 		rank = 0;
 
     Thing ( final double init, final int lo, final int hi, final String txt ) {
         if ( init > 0 ) {
@@ -20,12 +23,12 @@ public abstract class Thing implements Comparable<Thing> {
     }
     
     Thing (String txt) {
-    	setTxt( txt );
+    	this.txt = txt;
     }
     
-    Thing (String txt, int x) {
-    	setTxt( txt );
-    	setHi( hi );
+    Thing (String txt, double init) {
+    	this.txt = txt;
+    	this.init = init;
     }
 
     void setLo ( final int lo ) {
@@ -61,21 +64,41 @@ public abstract class Thing implements Comparable<Thing> {
 
     void setTxt ( final String txt ) {
         if ( txt != null ) {
-            this.txt = txt;
-        } else if (txt.equals("")) {
-        	throw new IllegalArgumentException("txt cannot be empty");
-        } else {
+        	if (txt.equals(""))
+        		throw new IllegalArgumentException("txt cannot be empty");
+        	else
+        		this.txt = txt;
+        } else 
         	throw new IllegalArgumentException("txt cannot be null");
-        }
+    }
+    
+    void setInit ( final double init) {
+    	if (init < 0)
+    		throw new IllegalArgumentException("init can not be negative");
+    	
+    	this.init = init;
+    }
+    
+    double getInit() {
+    	return init;
+    }
+    
+    int getLo() {
+    	return lo;
+    }
+    
+    int getHi() {
+    	return hi;
+    }
+    
+    int getRank() {
+    	return rank;
     }
 
-    //make static
-    //change to input Thing, restrain the lo with x and return the edited Thing
-    int restrain ( final int x ) {
-        return Math.max( this.lo, Math.min( this.hi, x ) );
+    Thing restrain ( Thing thing ) {
+        thing.setInit(Math.max( this.lo, Math.min( this.hi, thing.init)));
+        return thing;
     }
-
-    abstract int rank ();
 
 }
 
@@ -83,32 +106,33 @@ class Percent extends Thing {
 
     static int PERCENT_RANK = 4;
 
-    Percent ( final int init, final int lo, final int hi, final String txt ) {
+    Percent ( final double init, final int lo, final int hi, final String txt ) {
         super( init, lo, hi, txt );
+        rank = getRank();
     }
     
     Percent (String txt) {
     	super( txt );
+    	rank = getRank();
     }
     
     Percent (String txt, int x) {
     	super ( txt, x);
+    	rank = getRank();
+    }
+    
+    public int getRank() {
+    	return PERCENT_RANK;
     }
 
-    @Override
-    int rank () {
-        return PERCENT_RANK;
-    }
-
-	@Override
 	public int compareTo(Thing otherThing) {
 		if (otherThing == null) {
 			throw new IllegalArgumentException("comparison with null");
 		}
 
-		if (PERCENT_RANK < otherThing.rank())
+		if (PERCENT_RANK < otherThing.getRank())
 			return -1;
-		else if (PERCENT_RANK > otherThing.rank())
+		else if (PERCENT_RANK > otherThing.getRank())
 			return 1;
 		else
 			return 0;
@@ -120,7 +144,7 @@ class Flow extends Thing {
 
     static int FLOW_RANK = 3;
 
-    Flow ( final int init, final int lo, final int hi, final String txt ) {
+    Flow ( final double init, final int lo, final int hi, final String txt ) {
         super( init, lo, hi, txt );
     }
 
@@ -128,20 +152,18 @@ class Flow extends Thing {
     	super( txt );
     }
 
-    @Override
-    int rank () {
+    public int getRank () {
         return FLOW_RANK;
     }
     
-	@Override
 	public int compareTo(Thing otherThing) {
 		if (otherThing == null) {
 			throw new IllegalArgumentException("comparison with null");
 		}
 
-		if (FLOW_RANK < otherThing.rank())
+		if (FLOW_RANK < otherThing.getRank())
 			return -1;
-		else if (FLOW_RANK > otherThing.rank())
+		else if (FLOW_RANK > otherThing.getRank())
 			return 1;
 		else
 			return 0;
@@ -152,7 +174,7 @@ class Stock extends Thing {
 
     static int STOCK_RANK = 2;
 
-    Stock ( final int init, final int lo, final int hi, final String txt ) {
+    Stock ( final double init, final int lo, final int hi, final String txt ) {
         super( init, lo, hi, txt );
     }
 
@@ -160,20 +182,18 @@ class Stock extends Thing {
     	super(txt, x);
     }
 
-    @Override
-    int rank () {
+    int getRank () {
         return STOCK_RANK;
     }
     
-	@Override
 	public int compareTo(Thing otherThing) {
 		if (otherThing == null) {
 			throw new IllegalArgumentException("comparison with null");
 		}
 
-		if (STOCK_RANK < otherThing.rank())
+		if (STOCK_RANK < otherThing.getRank())
 			return -1;
-		else if (STOCK_RANK > otherThing.rank())
+		else if (STOCK_RANK > otherThing.getRank())
 			return 1;
 		else
 			return 0;
@@ -184,7 +204,7 @@ class Aux extends Thing {
 
     static int AUX_RANK = 1;
 
-    Aux ( final int init, final int lo, final int hi, final String txt ) {
+    Aux ( final double init, final int lo, final int hi, final String txt ) {
         super( init, lo, hi, txt );
     }
 
@@ -195,21 +215,15 @@ class Aux extends Thing {
     Aux (String txt) {
     	super ( txt );
     }
-
-    @Override
-    int rank () {
-        return AUX_RANK;
-    }
     
-	@Override
 	public int compareTo(Thing otherThing) {
 		if (otherThing == null) {
 			throw new IllegalArgumentException("comparison with null");
 		}
 
-		if (AUX_RANK < otherThing.rank())
+		if (AUX_RANK < otherThing.getRank())
 			return -1;
-		else if (AUX_RANK > otherThing.rank())
+		else if (AUX_RANK > otherThing.getRank())
 			return 1;
 		else
 			return 0;

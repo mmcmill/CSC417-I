@@ -2,30 +2,44 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BrooksLaw extends Model {
-	HashMap<String, Double> params;
+	HashMap<String, Thing> params;
 
-	public BrooksLaw (HashMap<String, Double> params) {
-		super(new ArrayList<Double>(params.values()));
+	public BrooksLaw (HashMap<String, Thing> params) {
+		super(params);
 		this.params = params;
 	}
 
-	public Things have(Model i) {
-		Flow assimilationRate = 			new Flow("assimilationRate");
-		Percent communicationOverhead = 	new Percent("communicationOverhead");
-		Stock developedSoftware = 			new Stock("developedSoftware", i.getParams().get("d").intValue());
-		Stock experiencedPeople = 			new Stock("experiencedPeople", (i.getParams().get("ep")).intValue());
-		Aux experiencedPeopleNeeded2Train =	new Aux("experiencedPeopleNeeded2Train");
-		Aux nominalProductivity = 			new Aux("nominalProductivity", i.getParams().get("nprod").intValue());
-		Stock newPersonnel = 				new Stock("newPersonnel", (int)(i.getParams().get("np")).intValue());
-		Flow personnelAllocationRate = 		new Flow("personnelAllocationRate");
-		Aux plannedSoftware = 				new Aux("plannedSoftware");
-		Flow softwareDevelopmentRate = 		new Flow("softwareDevelopmentRate");
-		Aux teamSize = 						new Aux("teamSize", i.getParams().get("ts").intValue());
-		Percent trainingOverhead = 			new Percent("trainingOverhead", i.getParams().get("to").intValue());
-		Stock requirements = 				new Stock("requirements", i.getParams().get("r").intValue());
+	public Things have(HashMap<String, Thing> i) {
+		HashMap<String, Thing> things = new HashMap<String, Thing>();
 		
-		//add a return
-		//take all these, turn into hashmap, return
+		Flow assimilationRate = 			new Flow("assimilationRate");
+		things.put("assimilationRate", assimilationRate);
+		Percent communicationOverhead = 	new Percent("communicationOverhead");
+		things.put("communicationOverhead", communicationOverhead);
+		Stock developedSoftware = 			new Stock(i.get("d").init, i.get("d").lo, i.get("d").hi, i.get("d").txt);
+		things.put("d", developedSoftware);
+		Stock experiencedPeople = 			new Stock(i.get("ep").init, i.get("ep").lo, i.get("ep").hi, i.get("ep").txt);
+		things.put("ep", experiencedPeople);
+		Aux experiencedPeopleNeededToTrain =	new Aux("experiencedPeopleNeededToTrain");
+		things.put("experiencedPeopleNeededToTrain", experiencedPeopleNeededToTrain);
+		Aux nominalProductivity = 			new Aux(i.get("nprod").init, i.get("nprod").lo, i.get("nprod").hi, i.get("nprod").txt);
+		things.put("nprod", nominalProductivity);
+		Stock newPersonnel = 				new Stock(i.get("np").init, i.get("np").lo, i.get("np").hi, i.get("np").txt);
+		things.put("np", newPersonnel);
+		Flow personnelAllocationRate = 		new Flow("personnelAllocationRate");
+		things.put("cpersonnelAllocationRate", personnelAllocationRate);
+		Aux plannedSoftware = 				new Aux("plannedSoftware");
+		things.put("plannedSoftware", plannedSoftware);
+		Flow softwareDevelopmentRate = 		new Flow("softwareDevelopmentRate");
+		things.put("softwareDevelopmentRate", softwareDevelopmentRate);
+		Aux teamSize = 						new Aux(i.get("ts").init, i.get("ts").lo, i.get("ts").hi, i.get("ts").txt);
+		things.put("ts", teamSize);
+		Percent trainingOverhead = 			new Percent(i.get("to").init, i.get("to").lo, i.get("to").hi, i.get("to").txt);
+		things.put("to", trainingOverhead);
+		Stock requirements = 				new Stock(i.get("r").init, i.get("r").lo, i.get("r").hi, i.get("r").txt);
+		things.put("r", requirements);
+		
+		return new Things(things);
 	}
 
 	//look into commOverhead
@@ -55,5 +69,11 @@ public class BrooksLaw extends Model {
 		j.put("np", j.get("np") + (i.get("paR") - i.get("aR") * dt));
 		j.put("d", j.get("d") + i.get("sdR") * dt);
 		j.put("r", j.get("r") - i.get("sdR") * dt);
+	}
+	
+	
+	public static void main( String[] args) {
+		ArrayList<Object> inputList = inputThings();
+		HashMap<String, Thing> initMap = createInitHashMap(inputList);
 	}
 }

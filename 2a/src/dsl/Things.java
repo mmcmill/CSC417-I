@@ -16,14 +16,12 @@ public class Things {
             throw new IllegalArgumentException( "Things cannot be null" );
         }
         this.things = things;
-
         // sort the things by rank, using comparator in Thing
         final SortedSet<Thing> sortedByRank = new TreeSet<Thing>( this.things.values() );
 
         for ( final Thing value : sortedByRank ) {
             order.add( getKey( value ) );
         }
-
         // set the name for the things to be the keys
         for ( final String key : this.order ) {
             this.things.get( key ).setTxt( key );

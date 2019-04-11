@@ -6,14 +6,14 @@ import java.util.Scanner;
 public class Model {
 	// "Genereic" just for the time being
 	// private ArrayList<Object> params;
-	private HashMap<String, Double> params;
+	private HashMap<String, Thing> params;
 	private Object head;
 
-	public Model(ArrayList<Double> params) {
+	public Model(HashMap<String, Thing> params) {
 		this.params = params;
 	}
 
-	public HashMap<String, Double> getParams() {
+	public HashMap<String, Thing> getParams() {
 		return params;
 	}
 
@@ -24,101 +24,18 @@ public class Model {
 	public void have() {
 		throw new UnsupportedOperationException("have must be implemented in subclass");
 	}
-	
-	public static ArrayList<Object> inputThings() {
-		
-		ArrayList<Object> list = new ArrayList<Object>();
-		Scanner scan = new Scanner(System.in);
-		scan.useDelimiter("[0-9]");
-		scan.next();
-		scan.useDelimiter("[,]");
-		double np = scan.nextDouble();
-		list.add(np);
-		scan.useDelimiter("[0-9]");
-		scan.next();
-		scan.useDelimiter("[,]");
-		double productivity_exp = scan.nextDouble();
-		list.add(productivity_exp);
-		scan.useDelimiter("[0-9]");
-		scan.next();
-		scan.useDelimiter("[,]");
-		double ep = scan.nextDouble();
-		list.add(ep);
-		scan.useDelimiter("[0-9]");
-		scan.next();
-		scan.useDelimiter("[,]");
-		double atleast = scan.nextDouble();
-		list.add(atleast);
-		scan.useDelimiter("[0-9]");
-		scan.next();
-		scan.useDelimiter("[,]");
-		double productivity_new = scan.nextDouble();
-		list.add(productivity_new);
-		scan.useDelimiter("[0-9]");
-		scan.next();
-		scan.useDelimiter("[,]");
-		double r = scan.nextDouble();
-		list.add(r);
-		scan.useDelimiter("[0-9]");
-		scan.next();
-		scan.useDelimiter("[,]");
-		double learning_curve = scan.nextDouble();
-		list.add(learning_curve);
-		scan.useDelimiter("[0-9]");
-		scan.next();
-		scan.useDelimiter("[,]");
-		double nprod = scan.nextDouble();
-		list.add(nprod);
-		scan.useDelimiter("[0-9]");
-		scan.next();
-		scan.useDelimiter("[,]");
-		double done_percent= scan.nextDouble();
-		list.add(done_percent);
-		scan.useDelimiter("[0-9]");
-		scan.next();
-		scan.useDelimiter("[,]");
-		double to = scan.nextDouble();
-		list.add(to);
-		scan.useDelimiter("[0-9]");
-		scan.next();
-		scan.useDelimiter("[,]");
-		double pomposity = scan.nextDouble();
-		list.add(pomposity);
-		scan.useDelimiter("[0-9]");
-		scan.next();
-		scan.useDelimiter("[,]");
-		double ts = scan.nextDouble();
-		list.add(ts);
-		scan.useDelimiter("[0-9]");
-		scan.next();
-		scan.useDelimiter("[,]");
-		double d = scan.nextDouble();
-		list.add(d);
-		scan.useDelimiter("[T|F]");
-		scan.next();
-		scan.useDelimiter("[,]");
-		boolean verbose = scan.nextBoolean();
-		list.add(verbose);
-		scan.useDelimiter("[0-9]");
-		scan.next();
-		scan.useDelimiter("[}]");
-		double optimism = scan.nextDouble();
-		list.add(optimism);
-		scan.useDelimiter("[0-9]");
-		scan.nextLine();
-		
-		scan.close();
-		return list;
-	}
 
 	public void run(int dt, int timeMax, boolean printHead, boolean verbose) {
+		
 		printHead = true;
 		verbose = false;
 		boolean changeable = true;
+		
+		//instantiate BrooksLaw
 
 		Things have = this.have();
 		int t = 0;
-		HashMap<String, Thing> b4 = have.payload(/*current payload*/);
+		HashMap<String, Thing> b4 = have.payload();
 		ArrayList<String> head = new ArrayList<String>();
     
 		head.add("?t");
@@ -137,10 +54,6 @@ public class Model {
 			// Probably will change to user Logger
 			System.out.println(head);
 		}
-		
-		//need to add input operations to handle the dictionary input from beforebrooks2.txt
-		//send all input to the for loop for processing
-		ArrayList<Object> inputList = inputThings();
 
 		for (int i = 0; i < timeMax; i++) {
 			HashMap<String, Thing> now = have.payload(b4);
