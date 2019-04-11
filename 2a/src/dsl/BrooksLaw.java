@@ -40,40 +40,43 @@ public class BrooksLaw extends Model {
 		things.put("r", requirements);
 		
 		return new Things(things);
-	} }
-/*
+	} 
+
 	//look into commOverhead
 	//co #1
 	public Double commOverhead(Double x) {
-		// Not sure what 'x' is supposed to be yet
-
 		// Talk to everyone on my team
-		Double myTeam = this.params.get("ts") - 1;
+		Double myTeam = this.params.get("ts").getInit() - 1;
 		// Talk to every other team
-		Double others = x / (this.params.get("ts")) - 1;
+		Double others = x / (this.params.get("ts")).getInit() - 1;
 
-		return (this.params.get("pomposity") * (Math.pow(myTeam, 2) + Math.pow(others, 2)));
+		return (this.params.get("pomposity").getInit() * (Math.pow(myTeam, 2) + Math.pow(others, 2)));
 	}
 
-	//change names in step
-	//take doubles out of thing instead of having the hashmap string-thing which was
-	//the case when this was implemented
-	public void step(int dt, int t, HashMap<String, Thing> i, HashMap<String, Thing> j) {
-		j.put("aR", i.get("np") / this.params.get("learning_curve"));
-		j.put("ps", this.params.get("optimism") * t);
-		j.put("co", commOverhead(i.get("ep") + i.get("np")));
-		j.put("paR", ((i.get("ps") - i.get("d") < this.params.get("atleast"))  && (t < this.params.get("done_percent") * t / 100 )) ? 6 : 0);
-		j.put("sdR", i.get("nprod") * (1 - i.get("co") / 100) * (this.params.get("sDR_param1" * i.get("np") + this.params.get("sDR_param2") * (i.get("ep") - i.get("ept")))));
-		j.put("ept", i.get("np") * i.get("to") / 100);
-		j.put("ep", j.get("ep") + i.get("aR") * dt);
-		j.put("np", j.get("np") + (i.get("paR") - i.get("aR") * dt));
-		j.put("d", j.get("d") + i.get("sdR") * dt);
-		j.put("r", j.get("r") - i.get("sdR") * dt);
-	}
+//	//change names in step
+//	//take doubles out of thing instead of having the hashmap string-thing which was
+//	//the case when this was implemented
+//	
+//	/** Not sure what is meant by above, should j be HashMap<String, Double> and we use i.get().getInit()? 
+//	 * if so, I think we just have to add .getInit() to the end of each .get() and change type of j in parameter
+//	 * leaving as-is for now as I am unsure */
+//	
+//	public void step(int dt, int t, HashMap<String, Thing> i, HashMap<String, Thing> j) {
+//		j.put("assimilationRate", i.get("np") / this.params.get("learning_curve"));
+//		j.put("plannedSoftware", this.params.get("optimism") * t);
+//		j.put("communicationOverhead", commOverhead(i.get("ep") + i.get("np")));
+//		j.put("personnelAllocationRate", ((i.get("ps") - i.get("d") < this.params.get("atleast"))  && (t < this.params.get("done_percent") * t / 100 )) ? 6 : 0);
+//		j.put("softwareDevelopmentRate", i.get("nprod") * (1 - i.get("co") / 100) * (this.params.get("sDR_param1" * i.get("np") + this.params.get("sDR_param2") * (i.get("ep") - i.get("ept")))));
+//		j.put("ExperiencedPeopleNeededToTrain", i.get("np") * i.get("to") / 100);
+//		j.put("ep", j.get("ep") + i.get("aR") * dt);
+//		j.put("np", j.get("np") + (i.get("paR") - i.get("aR") * dt));
+//		j.put("d", j.get("d") + i.get("sdR") * dt);
+//		j.put("r", j.get("r") - i.get("sdR") * dt);
+//	}
 	
 	
 	public static void main( String[] args) {
 		ArrayList<Object> inputList = inputThings();
 		HashMap<String, Thing> initMap = createInitHashMap(inputList);
-	}
-}*/
+	}	
+}
