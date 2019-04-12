@@ -130,8 +130,8 @@ class Percent extends Thing {
     	rank = this.getRank();
     }
     
-    Percent (String txt, int x) {
-    	super ( txt, x);
+    Percent (String txt, double init) {
+    	super ( txt, init);
     	rank = this.getRank();
     }
     
@@ -168,6 +168,10 @@ class Flow extends Thing {
     	super( txt );
     	rank = this.getRank();
     }
+    
+    Flow (String txt, double init) {
+    	super(txt, init);
+    }
 
     public int getRank () {
         return FLOW_RANK;
@@ -198,7 +202,7 @@ class Stock extends Thing {
         
     }
 
-    Stock(String txt, int x) {
+    Stock(String txt, double x) {
     	super(txt, x);
     	rank = this.getRank();
     }
@@ -231,8 +235,8 @@ class Aux extends Thing {
         rank = this.getRank();
     }
 
-    Aux (String txt, int x) {
-    	super ( txt, x );
+    Aux (String txt, double init) {
+    	super ( txt, init );
     	rank = this.getRank();
     }
     

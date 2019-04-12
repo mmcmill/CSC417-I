@@ -9,7 +9,7 @@ public class Brooks2 {
 		HashMap<String, Thing> thingMap = inputThings();
 		//printHashMap(thingMap);
 		BrooksLaw brooksLaw = new BrooksLaw(thingMap);
-		Things things = brooksLaw.have(thingMap);
+		Things things = brooksLaw.have();
 		things.printOrder();
 		//printHashMap(things.things);
 	}
