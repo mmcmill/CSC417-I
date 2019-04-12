@@ -1,21 +1,52 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class Brooks2 {
-	
-	private static boolean verbose = false; 
-	
-	public static void main (String[] args) {
-		HashMap<String, Thing> thingMap = inputThings();
-		//printHashMap(thingMap);
-		BrooksLaw brooksLaw = new BrooksLaw(thingMap);
-		Things things = brooksLaw.have();
-		things.printOrder();
-		//printHashMap(things.things);
+
+	private static boolean verbose = false;
+
+	public static void main(String[] args) {
+		HashMap<String, Thing> thingMap;
+		try {
+			thingMap = inputThings();
+//			printHashMap(thingMap);
+
+			BrooksLaw brooksLaw = new BrooksLaw(thingMap);
+			Things things = brooksLaw.have();
+			brooksLaw.run(1, 100, false, true);
+
+			// Output is expected in alphabetical key order
+			// Must convert to TreeMap
+			TreeMap<String, Thing> blTree = new TreeMap<String, Thing>();
+			blTree.putAll(brooksLaw.getParams());
+
+			StringBuilder sb = new StringBuilder();
+			for (Map.Entry<String, Thing> e : blTree.entrySet()) {
+				sb.append(e.getValue().getInit());
+				sb.append(", ");
+			}
+			// Remove extra comma
+			sb.deleteCharAt(sb.toString().length() - 2);
+
+			// Print header
+			System.out.println(
+					"?t, $atleast, >d, $done_percent, <ep, $learning_curve, <np, $nprod, $optimism, $pomposity, $productivity_exp, $productivity_new, $r, $to, $ts, ?verbose");
+			System.out.println(sb.toString());
+
+//			things.printOrder();
+//			printHashMap(things.things);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
-	public static HashMap<String, Thing> inputThings() {
-		
+
+	public static HashMap<String, Thing> inputThings() throws FileNotFoundException {
+
 		HashMap<String, Thing> thingMap = new HashMap<String, Thing>();
 		Scanner scan = new Scanner(System.in);
 		scan.useDelimiter("[0-9]");
@@ -61,7 +92,7 @@ public class Brooks2 {
 		scan.useDelimiter("[0-9]");
 		scan.next();
 		scan.useDelimiter("[,]");
-		double done_percent= scan.nextDouble();
+		double done_percent = scan.nextDouble();
 		thingMap.put("done_percent", new Thing("done_percent", done_percent));
 		scan.useDelimiter("[0-9]");
 		scan.next();
@@ -94,16 +125,17 @@ public class Brooks2 {
 		thingMap.put("optimism", new Thing("optimism", optimism));
 		scan.useDelimiter("[0-9]");
 		scan.nextLine();
-		
+
 		scan.close();
 		return thingMap;
 	}
-	
+
 	public static void printHashMap(HashMap<String, Thing> map) {
 		for (String key : map.keySet()) {
 			Thing thing = map.get(key);
-			System.out.println("Text: " + thing.txt + "\tLow: " + thing.lo + "\tHigh: " + thing.hi + "\tInit: " + thing.init);
-			}
+			System.out.println(
+					"Text: " + thing.txt + "\tLow: " + thing.lo + "\tHigh: " + thing.hi + "\tInit: " + thing.init);
+		}
 	}
 
 	public static boolean getVerbose() {

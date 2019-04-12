@@ -56,12 +56,13 @@ public class BrooksLaw extends Model {
 		j.put("assimilationRate", new Flow("assimilationRate", i.get("np").getInit() / this.params.get("learning_curve").getInit()));
 		j.put("plannedSoftware", new Aux("plannedSoftware", this.params.get("optimism").getInit() * t));
 		j.put("communicationOverhead", new Percent("communicationOverhead", commOverhead(i.get("ep").getInit() + i.get("np").getInit())));
-		j.put("personnelAllocationRate", new Flow ("personnelAllocationRate", (i.get("ps").getInit() - i.get("d").getInit() < this.params.get("atleast").getInit())  && (t < (this.params.get("done_percent").getInit() * t / 100 )) ? 6 : 0));
-		j.put("softwareDevelopmentRate", new Flow ("softwareDevelopmentRate", i.get("nprod").getInit() * (1 - i.get("co").getInit() / 100) * (this.params.get("sDR_param1").getInit() * i.get("np").getInit() + this.params.get("sDR_param2").getInit() * (i.get("ep").getInit() - i.get("ept").getInit()))));
+		j.put("personnelAllocationRate", new Flow ("personnelAllocationRate", (i.get("plannedSoftware").getInit() - i.get("d").getInit() < this.params.get("atleast").getInit())  && (t < (this.params.get("done_percent").getInit() * t / 100 )) ? 6 : 0));
+		// These lookups don't appear to be keys in the map
+//		j.put("softwareDevelopmentRate", new Flow ("softwareDevelopmentRate", i.get("nprod").getInit() * (1 - i.get("communicationOverhead").getInit() / 100) * (this.params.get("sDR_param1").getInit() * i.get("np").getInit() + this.params.get("sDR_param2").getInit() * (i.get("ep").getInit() - i.get("ept").getInit()))));
 		j.put("experiencedPeopleNeededToTrain", new Aux("experiencedPeopleNeededToTrain", i.get("np").getInit() * i.get("to").getInit() / 100));
-		j.put("ep", new Stock("ep", j.get("ep").getInit() +  i.get("aR").getInit() * dt));
-		j.put("np", new Stock("np", j.get("np").getInit() + (i.get("paR").getInit() - i.get("aR").getInit() * dt)));
-		j.put("d", new Stock("d", j.get("d").getInit() + i.get("sdR").getInit() * dt));
-		j.put("r", new Stock("r", j.get("r").getInit() - i.get("sdR").getInit() * dt));
+		j.put("ep", new Stock("ep", j.get("ep").getInit() +  i.get("assimilationRate").getInit() * dt));
+		j.put("np", new Stock("np", j.get("np").getInit() + (i.get("personnelAllocationRate").getInit() - i.get("assimilationRate").getInit() * dt)));
+		j.put("d", new Stock("d", j.get("d").getInit() + i.get("softwareDevelopmentRate").getInit() * dt));
+		j.put("r", new Stock("r", j.get("r").getInit() - i.get("softwareDevelopmentRate").getInit() * dt));
 	}	
 }
