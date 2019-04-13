@@ -54,7 +54,7 @@ public class Brooks2 {
 	public static HashMap<String, Thing> inputThings() throws FileNotFoundException {
 
 		HashMap<String, Thing> thingMap = new HashMap<String, Thing>();
-		Scanner scan = new Scanner(new File("beforeBrooks2.txt"));
+		Scanner scan = new Scanner(System.in);
 		scan.useDelimiter("[0-9]");
 		scan.next();
 		scan.useDelimiter("[,]");

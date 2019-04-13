@@ -44,8 +44,8 @@ public class BrooksLaw extends Model {
 		things.put("pomposity", new Stock("pomposity", 20));
 		things.put("learning_curve", new Stock("learning_curve", 20));
 		things.put("optimism", new Stock("optimism", 20));
-		things.put("atleast", new Stock("learning_curve", 20));
-		things.put("done_percent", new Stock("learning_curve", 20));
+		things.put("atleast", new Stock("atleast", 20));
+		things.put("done_percent", new Stock("done_percent", 20));
 		
 		
 		return new Things(things);
