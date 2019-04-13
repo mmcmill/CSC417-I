@@ -16,13 +16,14 @@ public class Brooks2 {
 //			printHashMap(thingMap);
 
 			BrooksLaw brooksLaw = new BrooksLaw(thingMap);
-			Things things = brooksLaw.have();
-			brooksLaw.run(1, 100, false, true);
+			brooksLaw.params = brooksLaw.have().things;
+			brooksLaw.run(1, 100, false, verbose);
 
 			// Output is expected in alphabetical key order
 			// Must convert to TreeMap
 			TreeMap<String, Thing> blTree = new TreeMap<String, Thing>();
 			blTree.putAll(brooksLaw.getParams());
+			System.out.println(blTree.toString());
 
 			StringBuilder sb = new StringBuilder();
 			for (Map.Entry<String, Thing> e : blTree.entrySet()) {
@@ -41,6 +42,7 @@ public class Brooks2 {
 //			printHashMap(things.things);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
+			System.out.println("File Not Found");
 			e.printStackTrace();
 		}
 	}

@@ -21,8 +21,7 @@ public class Things {
 
         ArrayList<String> keyList = 
         		new ArrayList<String>(Arrays.asList(things.keySet().toArray(new String[things.keySet().size()])));
-        
-        System.out.println("KeyList size: " + keyList.size());
+
         for (String key : keyList) {
         	if (order.size() == 0)
         		order.add(key);
@@ -39,7 +38,6 @@ public class Things {
         		} 
         	}
         }
-        System.out.println("order size: " + order.size());
     }
     
     public void printOrder() {
@@ -47,7 +45,7 @@ public class Things {
         	System.out.println(key + " " + things.get(key).rank);
         }
     }
-
+/*
     private String getKey ( final Thing value ) {
         for ( final Entry<String, Thing> entry : this.things.entrySet() ) {
             if ( entry.getValue().equals( value ) ) {
@@ -56,7 +54,7 @@ public class Things {
         }
         return null;
     }
-
+*/
     public HashMap<String, Thing> payload ( final HashMap<String, Thing> old ) {
         final HashMap<String, Thing> out = new HashMap<String, Thing>();
         
@@ -64,16 +62,13 @@ public class Things {
             out.put( key, this.things.get( key ) );
         }
         // possibly just return HashMap parameter
-
         if ( old != null ) {
             for ( final Entry<String, Thing> oldEntry : old.entrySet() ) {
                 final String key = oldEntry.getKey();
                 out.put( key, things.get( key ).restrain(old.get( key )));
             }
         }
-
         return out;
-
     }
 
     public ArrayList<Thing> toList () {
