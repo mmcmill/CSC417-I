@@ -113,6 +113,11 @@ public class Thing implements Comparable <Thing> {
         thing.setInit(Math.max( this.lo, Math.min( this.hi, thing.init)));
         return thing;
     }
+    
+    @Override
+	public String toString() {
+    	return Double.toString(init);
+    }
 
 }
 
@@ -226,21 +231,21 @@ class Stock extends Thing {
 	}
 }
 
-class Aux extends Thing {
+class Auxiliary extends Thing {
 
     static int AUX_RANK = 1;
 
-    Aux ( final double init, final int lo, final int hi, final String txt ) {
+    Auxiliary ( final double init, final int lo, final int hi, final String txt ) {
         super( init, lo, hi, txt );
         rank = this.getRank();
     }
 
-    Aux (String txt, double init) {
+    Auxiliary (String txt, double init) {
     	super ( txt, init );
     	rank = this.getRank();
     }
     
-    Aux (String txt) {
+    Auxiliary (String txt) {
     	super ( txt );
     	rank = this.getRank();
     }

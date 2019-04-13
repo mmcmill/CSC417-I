@@ -8,16 +8,21 @@ import java.util.TreeMap;
 public class Brooks2 {
 
 	private static boolean verbose = false;
+	private static final int DT = 1;
+	private static final int TIME_MAX = 100;
 
 	public static void main(String[] args) {
 		HashMap<String, Thing> thingMap;
 		try {
 			thingMap = inputThings();
+			Logger.log("Successfully loaded data from System.in");
 //			printHashMap(thingMap);
 
 			BrooksLaw brooksLaw = new BrooksLaw(thingMap);
 			brooksLaw.params = brooksLaw.have().things;
-			brooksLaw.run(1, 100, false, verbose);
+			Logger.log("Brooks's Law model created");
+			Logger.log("Running model for dt, timeMax: " + DT +", " + TIME_MAX);
+			brooksLaw.run(DT, TIME_MAX, false, verbose);
 
 			// Output is expected in alphabetical key order
 			// Must convert to TreeMap
@@ -33,15 +38,14 @@ public class Brooks2 {
 			// Remove extra comma
 			sb.deleteCharAt(sb.toString().length() - 2);
 
-			// Print header
-			System.out.println(
-					"?t, $atleast, >d, $done_percent, <ep, $learning_curve, <np, $nprod, $optimism, $pomposity, $productivity_exp, $productivity_new, $r, $to, $ts, ?verbose");
-			System.out.println(sb.toString());
+//			// Print header
+//			System.out.println(
+//					"?t, $atleast, >d, $done_percent, <ep, $learning_curve, <np, $nprod, $optimism, $pomposity, $productivity_exp, $productivity_new, $r, $to, $ts, ?verbose");
+//			System.out.println(sb.toString());
 
 //			things.printOrder();
 //			printHashMap(things.things);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			System.out.println("File Not Found");
 			e.printStackTrace();
 		}
@@ -50,7 +54,7 @@ public class Brooks2 {
 	public static HashMap<String, Thing> inputThings() throws FileNotFoundException {
 
 		HashMap<String, Thing> thingMap = new HashMap<String, Thing>();
-		Scanner scan = new Scanner(System.in);
+		Scanner scan = new Scanner(new File("beforeBrooks2.txt"));
 		scan.useDelimiter("[0-9]");
 		scan.next();
 		scan.useDelimiter("[,]");

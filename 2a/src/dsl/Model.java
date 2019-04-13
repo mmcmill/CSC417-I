@@ -35,6 +35,7 @@ public class Model {
 
 		Things have = brooksLaw.have();
 		HashMap<String, Thing> b4 = have.payload(have.things);
+		
 		ArrayList<String> head = new ArrayList<String>();
     
 		head.add("?t");
