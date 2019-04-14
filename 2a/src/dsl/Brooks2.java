@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,20 +14,22 @@ public class Brooks2 {
 		HashMap<String, Thing> thingMap;
 		try {
 			thingMap = inputThings();
-			Logger.log("Successfully loaded data from System.in");
+			Logger.log("Successfully loaded data from Stdin.");
+			
 //			printHashMap(thingMap);
-
+			Logger.log("Creating Brook's Law model...");
 			BrooksLaw brooksLaw = new BrooksLaw(thingMap);
-			brooksLaw.params = brooksLaw.have().things;
-			Logger.log("Brooks's Law model created");
+			Logger.log("Brooks's Law model created.");
+			
 			Logger.log("Running model for dt, timeMax: " + DT +", " + TIME_MAX);
 			brooksLaw.run(DT, TIME_MAX, false, verbose);
-
-			// Output is expected in alphabetical key order
-			// Must convert to TreeMap
+			Logger.log("Model completed for dt, timeMax: " + DT + ", " + TIME_MAX);
+			
+//			Output is expected in alphabetical key order
+//			Must convert to TreeMap
 			TreeMap<String, Thing> blTree = new TreeMap<String, Thing>();
 			blTree.putAll(brooksLaw.getParams());
-			System.out.println(blTree.toString());
+//			System.out.println(blTree.toString());
 
 			StringBuilder sb = new StringBuilder();
 			for (Map.Entry<String, Thing> e : blTree.entrySet()) {
@@ -38,13 +39,11 @@ public class Brooks2 {
 			// Remove extra comma
 			sb.deleteCharAt(sb.toString().length() - 2);
 
-//			// Print header
-//			System.out.println(
-//					"?t, $atleast, >d, $done_percent, <ep, $learning_curve, <np, $nprod, $optimism, $pomposity, $productivity_exp, $productivity_new, $r, $to, $ts, ?verbose");
-//			System.out.println(sb.toString());
-
-//			things.printOrder();
-//			printHashMap(things.things);
+			// Print header
+			System.out.println(
+					"?t, $atleast, >d, $done_percent, <ep, $learning_curve, <np, $nprod, $optimism, $pomposity, $productivity_exp, $productivity_new, $r, $to, $ts, ?verbose");
+			System.out.println(sb.toString());
+			
 		} catch (FileNotFoundException e) {
 			System.out.println("File Not Found");
 			e.printStackTrace();

@@ -9,46 +9,42 @@ public class BrooksLaw extends Model {
 	}
 
 	@Override
-	public Things have() {
-		HashMap<String, Thing> things = new HashMap<String, Thing>();
-		
+	public Things have() {	
 		Flow assimilationRate = 			new Flow("assimilationRate");
-		things.put("assimilationRate", assimilationRate);
+		params.put("assimilationRate", assimilationRate);
 		Percent communicationOverhead = 	new Percent("communicationOverhead");
-		things.put("communicationOverhead", communicationOverhead);
+		params.put("communicationOverhead", communicationOverhead);
 		Stock developedSoftware = 			new Stock(params.get("d").init, params.get("d").lo, params.get("d").hi, params.get("d").txt);
-		things.put("d", developedSoftware);
+		params.put("d", developedSoftware);
 		Stock experiencedPeople = 			new Stock(params.get("ep").init, params.get("ep").lo, params.get("ep").hi, params.get("ep").txt);
-		things.put("ep", experiencedPeople);
+		params.put("ep", experiencedPeople);
 		Auxiliary experiencedPeopleNeededToTrain =	new Auxiliary("experiencedPeopleNeededToTrain");
-		things.put("experiencedPeopleNeededToTrain", experiencedPeopleNeededToTrain);
+		params.put("experiencedPeopleNeededToTrain", experiencedPeopleNeededToTrain);
 		Auxiliary nominalProductivity = 			new Auxiliary(params.get("nprod").init, params.get("nprod").lo, params.get("nprod").hi, params.get("nprod").txt);
-		things.put("nprod", nominalProductivity);
+		params.put("nprod", nominalProductivity);
 		Stock newPersonnel = 				new Stock(params.get("np").init, params.get("np").lo, params.get("np").hi, params.get("np").txt);
-		things.put("np", newPersonnel);
+		params.put("np", newPersonnel);
 		Flow personnelAllocationRate = 		new Flow("personnelAllocationRate");
-		things.put("personnelAllocationRate", personnelAllocationRate);
+		params.put("personnelAllocationRate", personnelAllocationRate);
 		Auxiliary plannedSoftware = 				new Auxiliary("plannedSoftware");
-		things.put("plannedSoftware", plannedSoftware);
+		params.put("plannedSoftware", plannedSoftware);
 		Flow softwareDevelopmentRate = 		new Flow("softwareDevelopmentRate");
-		things.put("softwareDevelopmentRate", softwareDevelopmentRate);
+		params.put("softwareDevelopmentRate", softwareDevelopmentRate);
 		Auxiliary teamSize = 						new Auxiliary(params.get("ts").init, params.get("ts").lo, params.get("ts").hi, params.get("ts").txt);
-		things.put("ts", teamSize);
+		params.put("ts", teamSize);
 		Percent trainingOverhead = 			new Percent(params.get("to").init, params.get("to").lo, params.get("to").hi, params.get("to").txt);
-		things.put("to", trainingOverhead);
+		params.put("to", trainingOverhead);
 		Stock requirements = 				new Stock(params.get("r").init, params.get("r").lo, params.get("r").hi, params.get("r").txt);
-		things.put("r", requirements);
+		params.put("r", requirements);
 		
-		// When missing, cause NPE in step()
-		// Values are placeholders - are these constants?
-		things.put("pomposity", new Stock("pomposity", 20));
-		things.put("learning_curve", new Stock("learning_curve", 20));
-		things.put("optimism", new Stock("optimism", 20));
-		things.put("atleast", new Stock("atleast", 20));
-		things.put("done_percent", new Stock("done_percent", 20));
-		
-		
-		return new Things(things);
+//		// When missing, cause NPE in step()
+//		// Values are placeholders - are these constants?
+//		things.put("pomposity", new Stock("pomposity", 20));
+//		things.put("learning_curve", new Stock("learning_curve", 20));
+//		things.put("optimism", new Stock("optimism", 20));
+//		things.put("atleast", new Stock("atleast", 20));
+//		things.put("done_percent", new Stock("done_percent", 20));	
+		return new Things (params);
 	} 
 
 	public Double commOverhead(Double x) {
