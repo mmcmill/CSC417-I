@@ -22,7 +22,7 @@ public class Brooks2 {
 			Logger.log("Brooks's Law model created.");
 			
 			Logger.log("Running model for dt, timeMax: " + DT +", " + TIME_MAX);
-			brooksLaw.run(DT, TIME_MAX, false, verbose);
+			brooksLaw.run(DT, TIME_MAX, verbose);
 			Logger.log("Model completed for dt, timeMax: " + DT + ", " + TIME_MAX);
 			
 //			Output is expected in alphabetical key order
@@ -32,10 +32,14 @@ public class Brooks2 {
 //			System.out.println(blTree.toString());
 
 			StringBuilder sb = new StringBuilder();
+			System.out.print("\n\n");
 			for (Map.Entry<String, Thing> e : blTree.entrySet()) {
+				System.out.print(e.getKey() + ": ");
+				System.out.println(e.toString());
 				sb.append(e.getValue().getInit());
-				sb.append(", ");
+				sb.append(", ");	
 			}
+			System.out.print("\n\n");
 			// Remove extra comma
 			sb.deleteCharAt(sb.toString().length() - 2);
 
@@ -63,7 +67,7 @@ public class Brooks2 {
 		scan.next();
 		scan.useDelimiter("[,]");
 		double productivity_exp = scan.nextDouble();
-		thingMap.put("exp", new Thing("exp", productivity_exp));
+		thingMap.put("productivity_exp", new Thing("exp", productivity_exp));
 		scan.useDelimiter("[0-9]");
 		scan.next();
 		scan.useDelimiter("[,]");

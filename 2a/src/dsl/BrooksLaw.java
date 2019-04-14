@@ -14,36 +14,29 @@ public class BrooksLaw extends Model {
 		params.put("assimilationRate", assimilationRate);
 		Percent communicationOverhead = 	new Percent("communicationOverhead");
 		params.put("communicationOverhead", communicationOverhead);
-		Stock developedSoftware = 			new Stock(params.get("d").init, params.get("d").lo, params.get("d").hi, params.get("d").txt);
+		Stock developedSoftware = 			new Stock(0, params.get("d").lo, params.get("d").hi, params.get("d").txt);
 		params.put("d", developedSoftware);
-		Stock experiencedPeople = 			new Stock(params.get("ep").init, params.get("ep").lo, params.get("ep").hi, params.get("ep").txt);
+		Stock experiencedPeople = 			new Stock(30, params.get("ep").lo, params.get("ep").hi, params.get("ep").txt);
 		params.put("ep", experiencedPeople);
 		Auxiliary experiencedPeopleNeededToTrain =	new Auxiliary("experiencedPeopleNeededToTrain");
 		params.put("experiencedPeopleNeededToTrain", experiencedPeopleNeededToTrain);
-		Auxiliary nominalProductivity = 			new Auxiliary(params.get("nprod").init, params.get("nprod").lo, params.get("nprod").hi, params.get("nprod").txt);
+		Auxiliary nominalProductivity = 	new Auxiliary(0.1, params.get("nprod").lo, params.get("nprod").hi, params.get("nprod").txt);
 		params.put("nprod", nominalProductivity);
-		Stock newPersonnel = 				new Stock(params.get("np").init, params.get("np").lo, params.get("np").hi, params.get("np").txt);
+		Stock newPersonnel = 				new Stock(0, params.get("np").lo, params.get("np").hi, params.get("np").txt);
 		params.put("np", newPersonnel);
 		Flow personnelAllocationRate = 		new Flow("personnelAllocationRate");
 		params.put("personnelAllocationRate", personnelAllocationRate);
-		Auxiliary plannedSoftware = 				new Auxiliary("plannedSoftware");
+		Auxiliary plannedSoftware = 		new Auxiliary("plannedSoftware");
 		params.put("plannedSoftware", plannedSoftware);
 		Flow softwareDevelopmentRate = 		new Flow("softwareDevelopmentRate");
 		params.put("softwareDevelopmentRate", softwareDevelopmentRate);
-		Auxiliary teamSize = 						new Auxiliary(params.get("ts").init, params.get("ts").lo, params.get("ts").hi, params.get("ts").txt);
+		Auxiliary teamSize = 				new Auxiliary(5, params.get("ts").lo, params.get("ts").hi, params.get("ts").txt);
 		params.put("ts", teamSize);
-		Percent trainingOverhead = 			new Percent(params.get("to").init, params.get("to").lo, params.get("to").hi, params.get("to").txt);
+		Percent trainingOverhead = 			new Percent(25, params.get("to").lo, params.get("to").hi, params.get("to").txt);
 		params.put("to", trainingOverhead);
-		Stock requirements = 				new Stock(params.get("r").init, params.get("r").lo, params.get("r").hi, params.get("r").txt);
+		Stock requirements = 				new Stock(500, params.get("r").lo, params.get("r").hi, params.get("r").txt);
 		params.put("r", requirements);
-		
-//		// When missing, cause NPE in step()
-//		// Values are placeholders - are these constants?
-//		things.put("pomposity", new Stock("pomposity", 20));
-//		things.put("learning_curve", new Stock("learning_curve", 20));
-//		things.put("optimism", new Stock("optimism", 20));
-//		things.put("atleast", new Stock("atleast", 20));
-//		things.put("done_percent", new Stock("done_percent", 20));	
+
 		return new Things (params);
 	} 
 
@@ -62,9 +55,7 @@ public class BrooksLaw extends Model {
 		j.put("plannedSoftware", new Auxiliary("plannedSoftware", this.params.get("optimism").getInit() * t));
 		j.put("communicationOverhead", new Percent("communicationOverhead", commOverhead(i.get("ep").getInit() + i.get("np").getInit())));
 		j.put("personnelAllocationRate", new Flow ("personnelAllocationRate", (i.get("plannedSoftware").getInit() - i.get("d").getInit() < this.params.get("atleast").getInit())  && (t < (this.params.get("done_percent").getInit() * t / 100 )) ? 6 : 0));
-		// These lookups don't appear to be keys in the map
-		// I'm not sure what softwareDevelopmentRate 1 and 2 are but those aren't keyed in, not sure where they're gotten from 
-//		j.put("softwareDevelopmentRate", new Flow ("softwareDevelopmentRate", i.get("nprod").getInit() * (1 - i.get("communicationOverhead").getInit() / 100) * (this.params.get("sDR_param1").getInit() * i.get("np").getInit() + this.params.get("sDR_param2").getInit() * (i.get("ep").getInit() - i.get("experiencedPeopleNeededToTrain").getInit()))));
+		j.put("softwareDevelopmentRate", new Flow ("softwareDevelopmentRate", i.get("nprod").getInit() * (1 - i.get("communicationOverhead").getInit() / 100) * (0.74 * i.get("np").getInit() + 1.28 * (i.get("ep").getInit() - i.get("experiencedPeopleNeededToTrain").getInit()))));
 		j.put("experiencedPeopleNeededToTrain", new Auxiliary("experiencedPeopleNeededToTrain", i.get("np").getInit() * i.get("to").getInit() / 100));
 		j.put("ep", new Stock("ep", j.get("ep").getInit() +  i.get("assimilationRate").getInit() * dt));
 		j.put("np", new Stock("np", j.get("np").getInit() + (i.get("personnelAllocationRate").getInit() - i.get("assimilationRate").getInit() * dt)));
