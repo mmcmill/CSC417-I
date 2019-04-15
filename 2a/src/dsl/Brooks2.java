@@ -8,7 +8,7 @@ public class Brooks2 {
 
 	private static boolean verbose = false;
 	private static final int DT = 1;
-	private static final int TIME_MAX = 100;
+	private static final int TIME_MAX = 30;
 
 	public static void main(String[] args) {
 		HashMap<String, Thing> thingMap;
@@ -17,20 +17,21 @@ public class Brooks2 {
 			Logger.log("Successfully loaded data from Stdin.");
 			
 //			printHashMap(thingMap);
-			Logger.log("Creating Brook's Law model...");
+		/*	Logger.log("Creating Brook's Law model...");
 			BrooksLaw brooksLaw = new BrooksLaw(thingMap);
-			Logger.log("Brooks's Law model created.");
+			Logger.log("Brooks's Law model created.");*/
 			
+			Model model = new Model(thingMap);
 			Logger.log("Running model for dt, timeMax: " + DT +", " + TIME_MAX);
-			brooksLaw.run(DT, TIME_MAX, verbose);
+			model.run(DT, TIME_MAX, verbose);
 			Logger.log("Model completed for dt, timeMax: " + DT + ", " + TIME_MAX);
 			
 //			Output is expected in alphabetical key order
 //			Must convert to TreeMap
-			TreeMap<String, Thing> blTree = new TreeMap<String, Thing>();
-			blTree.putAll(brooksLaw.getParams());
+//			TreeMap<String, Thing> blTree = new TreeMap<String, Thing>();
+//			blTree.putAll(brooksLaw.getParams());
 //			System.out.println(blTree.toString());
-
+/*
 			StringBuilder sb = new StringBuilder();
 			System.out.print("\n\n");
 			for (Map.Entry<String, Thing> e : blTree.entrySet()) {
@@ -47,7 +48,7 @@ public class Brooks2 {
 			System.out.println(
 					"?t, $atleast, >d, $done_percent, <ep, $learning_curve, <np, $nprod, $optimism, $pomposity, $productivity_exp, $productivity_new, $r, $to, $ts, ?verbose");
 			System.out.println(sb.toString());
-			
+			*/
 		} catch (FileNotFoundException e) {
 			System.out.println("File Not Found");
 			e.printStackTrace();

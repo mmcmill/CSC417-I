@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 public class Model {
 	// "Genereic" just for the time being
@@ -38,20 +39,26 @@ public class Model {
 //    softwareDevelopmentRate
 //    CommunicationOverhead
 		for (int i = t; i < timeMax; i++) {
+			Logger.log("Starting iteration for time t = " + i);
 			HashMap<String, Thing> now = have.payload(b4);
-			this.step(dt, i, b4, now);
+			brooksLaw.step(dt, i, b4, now);
 
 			//an arraylist of all the "init"s in the "Things" : an arraylist of doubles
 			List<Double> vals = new ArrayList<Double>();
-			now.values().forEach(Thing -> {vals.add(Thing.getInit());});
+			
+			TreeMap<String, Thing> blTree = new TreeMap<String, Thing>();
+			blTree.putAll(params);
+			blTree.values().forEach(Thing -> {
+				vals.add(Thing.getInit());
+				});
 			vals.add(0, (double) i);     		
 			
 			b4 = now;
 
-			if (verbose || i == timeMax) {
+			if (verbose || i == (timeMax - 1)) {
 				System.out.println(
 						"?t, $atleast, >d, $done_percent, <ep, $learning_curve, <np, $nprod, $optimism, $pomposity, $productivity_exp, $productivity_new, $r, $to, $ts, ?verbose");
-				for (int j = 0; j <= vals.size(); j++) {
+				for (int j = 0; j < vals.size(); j++) {
 					System.out.printf("%.2f, ", vals.get(j));				
 				}
 			}
