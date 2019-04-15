@@ -1,11 +1,10 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
 public class Model {
-	// "Genereic" just for the time being
-	// private ArrayList<Object> params;
 	private HashMap<String, Thing> params;
 
 	public Model(HashMap<String, Thing> params) {
@@ -30,36 +29,41 @@ public class Model {
 		BrooksLaw brooksLaw = new BrooksLaw(params);
 
 		Things have = brooksLaw.have();
-		HashMap<String, Thing> b4 = have.payload(have.things);
+		HashMap<String, Thing> b4 = have.payload(null);
 
-//    experiencedPeopleNeededToTrain
-//    plannedSoftware
-//    personnelAllocationRate
-//    assimilationRate
-//    softwareDevelopmentRate
-//    CommunicationOverhead
 		for (int i = t; i < timeMax; i++) {
 			Logger.log("Starting iteration for time t = " + i);
 			HashMap<String, Thing> now = have.payload(b4);
 			brooksLaw.step(dt, i, b4, now);
 
-			//an arraylist of all the "init"s in the "Things" : an arraylist of doubles
 			List<Double> vals = new ArrayList<Double>();
 			
 			TreeMap<String, Thing> blTree = new TreeMap<String, Thing>();
 			blTree.putAll(params);
+			List<String> removedThings = Arrays.asList("experiencedPeopleNeededToTrain", "plannedSoftware",
+					"personnelAllocationRate", "assimilationRate", "softwareDevelopmentRate", "communicationOverhead");
 			blTree.values().forEach(Thing -> {
-				vals.add(Thing.getInit());
+				if (!removedThings.contains(Thing.txt))
+					vals.add(Thing.getInit());
 				});
-			vals.add(0, (double) i);     		
-			
+			if (i + 1 == timeMax)
+				vals.add(0, 1.0);
+			else
+				vals.add(0, 0.0);
+			if (verbose)
+				vals.add(1.0);
+			else
+				vals.add(0.0);
 			b4 = now;
 
 			if (verbose || i == (timeMax - 1)) {
 				System.out.println(
 						"?t, $atleast, >d, $done_percent, <ep, $learning_curve, <np, $nprod, $optimism, $pomposity, $productivity_exp, $productivity_new, $r, $to, $ts, ?verbose");
 				for (int j = 0; j < vals.size(); j++) {
-					System.out.printf("%.2f, ", vals.get(j));				
+					if (j == 0)
+						System.out.printf("%d, ", vals.get(j).intValue());
+					else
+						System.out.printf("%.2f, ", vals.get(j));				
 				}
 			}
 		}

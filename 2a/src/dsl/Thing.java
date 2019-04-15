@@ -3,19 +3,16 @@
 public class Thing implements Comparable <Thing> {
 
     protected double    init = 0;
-    protected int    	lo   = 0;
-    protected int   	hi   = 100;
+    protected double    lo   = 0;
+    protected double   	hi   = 100;
     protected String 	txt  = "thing";
     protected int 		rank = 0;
 
-    Thing ( final double init, final int lo, final int hi, final String txt ) {
-        if ( init > 0 ) {
+    Thing ( final double init, final double lo, final double hi, final String txt ) {
+        if ( init > lo ) 
             this.init = init;
-        }
-        else if ( lo > 0 ) {
-            this.init = lo;
-        }
-
+        else
+        	this.init = lo;
         setLo( lo );
         setHi( hi );
         setTxt( txt );		
@@ -45,7 +42,7 @@ public class Thing implements Comparable <Thing> {
 			return 0;
     }
 
-    void setLo ( final int lo ) {
+    void setLo ( final double lo ) {
         if ( lo < 0 ) {
             throw new IllegalArgumentException( "lo cannot be negative" );
         } 
@@ -56,11 +53,11 @@ public class Thing implements Comparable <Thing> {
 
         this.lo = lo;
         if ( this.init >= this.lo ) {
-            this.lo = (int) this.init;
+            this.lo = this.init;
         }
     }
 
-    void setHi ( final int hi ) {
+    void setHi ( final double hi ) {
         if ( hi < 0 ) {
             throw new IllegalArgumentException( "hi cannot be negative" );
         } 
@@ -72,7 +69,7 @@ public class Thing implements Comparable <Thing> {
 
         this.hi = hi;
         if ( this.init >= this.hi ) {
-            this.lo = (int) this.init * 2;
+            this.lo = this.init * 2;
         }
     }
 
@@ -97,11 +94,11 @@ public class Thing implements Comparable <Thing> {
     	return init;
     }
     
-    int getLo() {
+    double getLo() {
     	return lo;
     }
     
-    int getHi() {
+    double getHi() {
     	return hi;
     }
     
@@ -125,7 +122,7 @@ class Percent extends Thing {
 
     static int PERCENT_RANK = 4;
 
-    Percent ( final double init, final int lo, final int hi, final String txt ) {
+    Percent ( final double init, final double lo, final double hi, final String txt ) {
         super( init, lo, hi, txt );
         rank = this.getRank();
     }
@@ -164,7 +161,7 @@ class Flow extends Thing {
 
     static int FLOW_RANK = 3;
 
-    Flow ( final double init, final int lo, final int hi, final String txt ) {
+    Flow ( final double init, final double lo, final double hi, final String txt ) {
         super( init, lo, hi, txt );
         rank = this.getRank();
     }
@@ -201,7 +198,7 @@ class Stock extends Thing {
 
     static int STOCK_RANK = 2;
 
-    Stock ( final double init, final int lo, final int hi, final String txt ) {
+    Stock ( final double init, final double lo, final double hi, final String txt ) {
         super( init, lo, hi, txt );
         rank = this.getRank();
         
@@ -235,7 +232,7 @@ class Auxiliary extends Thing {
 
     static int AUX_RANK = 1;
 
-    Auxiliary ( final double init, final int lo, final int hi, final String txt ) {
+    Auxiliary ( final double init, final double lo, final double hi, final String txt ) {
         super( init, lo, hi, txt );
         rank = this.getRank();
     }

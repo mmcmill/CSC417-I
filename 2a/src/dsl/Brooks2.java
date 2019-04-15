@@ -1,8 +1,6 @@
 import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.TreeMap;
 
 public class Brooks2 {
 
@@ -16,39 +14,11 @@ public class Brooks2 {
 			thingMap = inputThings();
 			Logger.log("Successfully loaded data from Stdin.");
 			
-//			printHashMap(thingMap);
-		/*	Logger.log("Creating Brook's Law model...");
-			BrooksLaw brooksLaw = new BrooksLaw(thingMap);
-			Logger.log("Brooks's Law model created.");*/
-			
 			Model model = new Model(thingMap);
 			Logger.log("Running model for dt, timeMax: " + DT +", " + TIME_MAX);
 			model.run(DT, TIME_MAX, verbose);
 			Logger.log("Model completed for dt, timeMax: " + DT + ", " + TIME_MAX);
 			
-//			Output is expected in alphabetical key order
-//			Must convert to TreeMap
-//			TreeMap<String, Thing> blTree = new TreeMap<String, Thing>();
-//			blTree.putAll(brooksLaw.getParams());
-//			System.out.println(blTree.toString());
-/*
-			StringBuilder sb = new StringBuilder();
-			System.out.print("\n\n");
-			for (Map.Entry<String, Thing> e : blTree.entrySet()) {
-				System.out.print(e.getKey() + ": ");
-				System.out.println(e.toString());
-				sb.append(e.getValue().getInit());
-				sb.append(", ");	
-			}
-			System.out.print("\n\n");
-			// Remove extra comma
-			sb.deleteCharAt(sb.toString().length() - 2);
-
-			// Print header
-			System.out.println(
-					"?t, $atleast, >d, $done_percent, <ep, $learning_curve, <np, $nprod, $optimism, $pomposity, $productivity_exp, $productivity_new, $r, $to, $ts, ?verbose");
-			System.out.println(sb.toString());
-			*/
 		} catch (FileNotFoundException e) {
 			System.out.println("File Not Found");
 			e.printStackTrace();
