@@ -14,15 +14,15 @@ public class BrooksLaw extends Model {
 		params.put("assimilationRate", assimilationRate);
 		Percent communicationOverhead = 	new Percent("communicationOverhead");
 		params.put("communicationOverhead", communicationOverhead);
-		Stock developedSoftware = 			new Stock(0, params.get("d").lo, params.get("d").hi, params.get("d").txt);
+		Stock developedSoftware = 			new Stock(0, params.get("d").getLo(), params.get("d").getHi(), params.get("d").getTxt());
 		params.put("d", developedSoftware);
-		Stock experiencedPeople = 			new Stock(30, params.get("ep").lo, params.get("ep").hi, params.get("ep").txt);
+		Stock experiencedPeople = 			new Stock(30, params.get("ep").getLo(), params.get("ep").getHi(), params.get("ep").getTxt());
 		params.put("ep", experiencedPeople);
 		Auxiliary experiencedPeopleNeededToTrain =	new Auxiliary("experiencedPeopleNeededToTrain");
 		params.put("experiencedPeopleNeededToTrain", experiencedPeopleNeededToTrain);
-		Auxiliary nominalProductivity = 	new Auxiliary(0.1, params.get("nprod").lo, params.get("nprod").hi, params.get("nprod").txt);
+		Auxiliary nominalProductivity = 	new Auxiliary(0.1, params.get("nprod").getLo(), params.get("nprod").getHi(), params.get("nprod").getTxt());
 		params.put("nprod", nominalProductivity);
-		Stock newPersonnel = 				new Stock(0, params.get("np").lo, params.get("np").hi, params.get("np").txt);
+		Stock newPersonnel = 				new Stock(0, params.get("np").getLo(), params.get("np").getHi(), params.get("np").getTxt());
 		params.put("np", newPersonnel);
 		Flow personnelAllocationRate = 		new Flow("personnelAllocationRate");
 		params.put("personnelAllocationRate", personnelAllocationRate);
@@ -30,11 +30,11 @@ public class BrooksLaw extends Model {
 		params.put("plannedSoftware", plannedSoftware);
 		Flow softwareDevelopmentRate = 		new Flow("softwareDevelopmentRate");
 		params.put("softwareDevelopmentRate", softwareDevelopmentRate);
-		Auxiliary teamSize = 				new Auxiliary(5, params.get("ts").lo, params.get("ts").hi, params.get("ts").txt);
+		Auxiliary teamSize = 				new Auxiliary(5, params.get("ts").getLo(), params.get("ts").getHi(), params.get("ts").getTxt());
 		params.put("ts", teamSize);
-		Percent trainingOverhead = 			new Percent(25, params.get("to").lo, params.get("to").hi, params.get("to").txt);
+		Percent trainingOverhead = 			new Percent(25, params.get("to").getLo(), params.get("to").getHi(), params.get("to").getTxt());
 		params.put("to", trainingOverhead);
-		Stock requirements = 				new Stock(500, params.get("r").lo, params.get("r").hi, params.get("r").txt);
+		Stock requirements = 				new Stock(500, params.get("r").getLo(), params.get("r").getHi(), params.get("r").getTxt());
 		params.put("r", requirements);
 
 		return new Things (params);

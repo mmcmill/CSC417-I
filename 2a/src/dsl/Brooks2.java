@@ -114,7 +114,7 @@ public class Brooks2 {
 		for (String key : map.keySet()) {
 			Thing thing = map.get(key);
 			System.out.println(
-					"Text: " + thing.txt + "\tLow: " + thing.lo + "\tHigh: " + thing.hi + "\tInit: " + thing.init);
+					"Text: " + thing.getTxt() + "\tLow: " + thing.getLo() + "\tHigh: " + thing.getHi() + "\tInit: " + thing.getInit());
 		}
 	}
 

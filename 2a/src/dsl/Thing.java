@@ -2,21 +2,21 @@
 
 public class Thing implements Comparable <Thing> {
 
-    protected double    init = 0;
-    protected double    lo   = 0;
-    protected double   	hi   = 100;
-    protected String 	txt  = "thing";
-    protected int 		rank = 0;
+    private double    init;
+    private double    lo = 0;
+    private double    hi = 100;
+    private String 	  txt = "thing";
+    protected int 	  rank = 0;
 
     Thing ( final double init, final double lo, final double hi, final String txt ) {
-        if ( init > lo ) 
-            this.init = init;
-        else
-        	this.init = lo;
-        setLo( lo );
-        setHi( hi );
-        setTxt( txt );		
-
+        this.init = init;
+        this.lo = lo;
+        this.hi = hi;
+        if (this.lo >= this.init)
+        	this.lo = this.init;
+        if (this.init >= this.hi)
+        	this.hi = this.init * 2;  
+        this.txt = txt;
     }
     
     Thing (String txt) {
@@ -46,31 +46,14 @@ public class Thing implements Comparable <Thing> {
         if ( lo < 0 ) {
             throw new IllegalArgumentException( "lo cannot be negative" );
         } 
-        // zero is default value.
-        if ( lo == 0 ) {
-            return;
-        }
-
         this.lo = lo;
-        if ( this.init >= this.lo ) {
-            this.lo = this.init;
-        }
     }
 
     void setHi ( final double hi ) {
         if ( hi < 0 ) {
             throw new IllegalArgumentException( "hi cannot be negative" );
         } 
-
-        // zero is default value
-        if ( hi == 0 ) {
-            return;
-        }
-
         this.hi = hi;
-        if ( this.init >= this.hi ) {
-            this.lo = this.init * 2;
-        }
     }
 
     void setTxt ( final String txt ) {
@@ -85,9 +68,12 @@ public class Thing implements Comparable <Thing> {
     
     void setInit ( final double init) {
     	if (init < 0)
-    		throw new IllegalArgumentException("init can not be negative");
-    	
+    		throw new IllegalArgumentException("init can not be negative");	
     	this.init = init;
+    }
+    
+    String getTxt() {
+    	return txt;
     }
     
     double getInit() {
