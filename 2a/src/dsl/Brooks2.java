@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -12,12 +13,14 @@ public class Brooks2 {
 		HashMap<String, Thing> thingMap;
 		try {
 			thingMap = inputThings();
-			Logger.log("Successfully loaded data from Stdin.");
 			
+			Logger.log("Successfully loaded data from Stdin.");
 			Model model = new Model(thingMap);
 			Logger.log("Running model for dt, timeMax: " + DT +", " + TIME_MAX);
-			model.run(DT, TIME_MAX, verbose);
+			ArrayList<String> outputList = model.run(DT, TIME_MAX, verbose);
 			Logger.log("Model completed for dt, timeMax: " + DT + ", " + TIME_MAX);
+			
+			outputThings(outputList);
 			
 		} catch (FileNotFoundException e) {
 			System.out.println("File Not Found");
@@ -109,7 +112,13 @@ public class Brooks2 {
 		scan.close();
 		return thingMap;
 	}
-
+	public static void outputThings(ArrayList<String> outputList) {
+		for (int i = 0; i < outputList.size(); i++) {
+			System.out.println(
+					"?t, $atleast, >d, $done_percent, <ep, $learning_curve, <np, $nprod, $optimism, $pomposity, $productivity_exp, $productivity_new, $r, $to, $ts, ?verbose");
+			System.out.println(outputList.get(i));
+		}
+	}
 	public static void printHashMap(HashMap<String, Thing> map) {
 		for (String key : map.keySet()) {
 			Thing thing = map.get(key);
