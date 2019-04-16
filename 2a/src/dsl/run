@@ -1,0 +1,4 @@
+#!/bin/bash
+
+javac Brooks2.java BrooksLaw.java Model.java Things.java Thing.java
+java Brooks2
