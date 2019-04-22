@@ -27,11 +27,13 @@ public class Model {
 		BrooksLaw brooksLaw = new BrooksLaw(params);
 		Things have = brooksLaw.have();
 		HashMap<String, Thing> b4 = have.payload(null);
+		//printHashMap(b4);
 		ArrayList<String> outputList = new ArrayList<String>();
 
 		for (int t = 0; t < timeMax; t += dt) {
 			Logger.log("Starting iteration for time t = " + t);
 			HashMap<String, Thing> now = have.payload(b4);
+			//printHashMap(now);
 			now = brooksLaw.step(dt, t, b4, now);
 			
 			List<Double> vals = new ArrayList<Double>();
