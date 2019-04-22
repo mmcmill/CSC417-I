@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <random>
+#include <cstdlib>
 #include <math.h>
 #include <unordered_map>
 #include <iomanip>
@@ -17,6 +17,10 @@ void inputArgs(int argc, char* argv[]) {
     if (strcmp(argv[1], "-n") == 0 ) {
       try {
         numRepeats = stoi(argv[2]);
+        if (numRepeats <= 0) {
+          cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
+          return;
+        }
       }
       catch (exception e) {
         cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
@@ -41,6 +45,10 @@ void inputArgs(int argc, char* argv[]) {
     if (strcmp(argv[1], "-n") == 0 ) {
       try {
         numRepeats = stoi(argv[2]);
+        if (numRepeats <= 0 ) {
+          cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
+          return;
+        }
       }
       catch (exception e) {
         cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
@@ -63,6 +71,10 @@ void inputArgs(int argc, char* argv[]) {
     if (strcmp(argv[3], "-n") == 0 ) {
       try {
         numRepeats = stoi(argv[4]);
+        if (numRepeats <= 0 ){
+          cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
+          return;
+        } 
       }
       catch (exception e) {
         cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
@@ -87,10 +99,15 @@ void inputArgs(int argc, char* argv[]) {
     cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
 }
 
+double doubleRand() {
+  return double(rand()) / (double(RAND_MAX));
+}
+
+
 double createRandomDouble(double min, double max) {
-  double zeroToOne = ((double) rand() / RAND_MAX);
-  return (((max - min) * zeroToOne) + min);
-}  
+  double randVal = doubleRand();
+  return ((max - min) * randVal + min);
+}
 
 unordered_map<string, double> createMap() {
 
@@ -127,13 +144,20 @@ void outputArgs(unordered_map<string, double> outputMap) {
   	   outputMap["productivity_new"], outputMap["productivity_exp"], outputMap["d"],
   	   outputMap["ep"], outputMap["nprod"], outputMap["np"], outputMap["ts"],
   	   outputMap["to"], outputMap["r"]);
-  if (verbose) cout << "True}";
-  else cout <<"False}";
+  if (verbose) cout << "True}" << endl;
+  else cout <<"False}" << endl;
 }
 
 int main(int argc, char* argv[]) {
-  srand(seed);
+  //Quarantine - input
   inputArgs(argc, argv);
-  unordered_map<string, double> outputMap = createMap();
-  outputArgs(outputMap);
+  
+  srand(seed);
+  for (int i = 0; i < numRepeats; i++){
+    unordered_map<string, double> outputMap = createMap();
+  
+    //Quarantine - output
+    outputArgs(outputMap);
+  }
+  
 }
