@@ -7,135 +7,155 @@
 
 using namespace std;
 
+#define PRINT_ERROR_REPORT cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
+#define SUCCESS return EXIT_SUCCESS;
+#define FAILURE return EXIT_FAILURE;
+#define CREATE_MAP_ENTRY(a,b,c) outputMap[a] = createRandomDouble(b, c);
+#define INIT_SEED(a) seed = stoi(argv[a]);
+#define INIT_NUM_REPEATS(a) numRepeats = stoi(argv[a]);
+#define MAIN_ARGS int argc, char* argv[]
+#define CATCH catch (exception e)
+#define COMP_S(a) strcmp(argv[a], "-s") == 0
+#define COMP_N(a) strcmp(argv[a], "-n") == 0
+#define ARGS_COMP(a) argc == a
+#define NR_CHECK numRepeats <= 0
+#define ZERO_TO_ONE double(rand()) / (double(RAND_MAX))
+#define CHECK_BOUNDS(a,b,c) ( a < b || a > c)
+#define SET_VERBOSE if (outputMap["verbose"] >= 0.5) verbose = true;
+
 int numRepeats = 1;
 int seed = 1;
 
-void inputArgs(int argc, char* argv[]) {
-  if (argc == 1)
-    return;
-  else if (argc == 3) {
-    if (strcmp(argv[1], "-n") == 0 ) {
+int inputArgs(MAIN_ARGS) {
+  if (ARGS_COMP(1))
+    SUCCESS
+  else if (ARGS_COMP(3)) {
+    if (COMP_N(1)) {
       try {
-        numRepeats = stoi(argv[2]);
-        if (numRepeats <= 0) {
-          cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
-          return;
+        INIT_NUM_REPEATS(2)
+        if (NR_CHECK) {
+          PRINT_ERROR_REPORT
+          FAILURE
         }
       }
-      catch (exception e) {
-        cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
-        return;
+      CATCH {
+        PRINT_ERROR_REPORT
+        FAILURE
       }
     }
-    else if (strcmp(argv[1], "-s") == 0) {
+    else if (COMP_S(1)) {
       try {
-        seed = stoi(argv[2]);
+        INIT_SEED(2)
       }
-      catch (exception e) {
-        cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
-        return;
+      CATCH {
+        PRINT_ERROR_REPORT
+        FAILURE
       }
     }
     else {
-      cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
-      return;
+      PRINT_ERROR_REPORT
+      FAILURE
     }
   }
-  else if (argc == 5) {
-    if (strcmp(argv[1], "-n") == 0 ) {
+  else if (ARGS_COMP(5)) {
+    if (COMP_N(1)) {
       try {
-        numRepeats = stoi(argv[2]);
-        if (numRepeats <= 0 ) {
-          cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
-          return;
+        INIT_NUM_REPEATS(2)
+        if (NR_CHECK) {
+          PRINT_ERROR_REPORT
+          FAILURE
         }
       }
-      catch (exception e) {
-        cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
-        return;
+      CATCH {
+        PRINT_ERROR_REPORT
+        FAILURE
       }
     }
-    else if (strcmp(argv[1], "-s") == 0) {
+    else if (COMP_S(1)) {
       try {
-        seed = stoi(argv[2]);
+        INIT_SEED(2)
       }
-      catch (exception e) {
-        cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
-        return;
+      CATCH {
+        PRINT_ERROR_REPORT
+        FAILURE
       }
     }
     else {
-      cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
-      return;
+      PRINT_ERROR_REPORT
+      FAILURE
     }
-    if (strcmp(argv[3], "-n") == 0 ) {
+    if (COMP_N(3)) {
       try {
-        numRepeats = stoi(argv[4]);
-        if (numRepeats <= 0 ){
-          cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
-          return;
+        INIT_NUM_REPEATS(4)
+        if (NR_CHECK){
+          PRINT_ERROR_REPORT
+          FAILURE
         } 
       }
-      catch (exception e) {
-        cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
-        return;
+      CATCH {
+        PRINT_ERROR_REPORT
+        FAILURE
       }
     }
-    else if (strcmp(argv[3], "-s") == 0) {
+    else if (COMP_S(3)) {
       try {
-        seed = stoi(argv[4]);
+        INIT_SEED(4)
       }
-      catch (exception e) {
-        cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
-        return;
+      CATCH {
+        PRINT_ERROR_REPORT
+        FAILURE
       }
     }
     else {
-      cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
-      return;
+      PRINT_ERROR_REPORT
+      FAILURE
     }
   }
-  else 
-    cout << "Arguments must either be -n [int] , -s [int] , or both" << endl;
+  else {
+    PRINT_ERROR_REPORT
+    FAILURE
+  }
+  SUCCESS
 }
 
 double doubleRand() {
-  return double(rand()) / (double(RAND_MAX));
+  double val = ZERO_TO_ONE;
+  if (CHECK_BOUNDS(val, 0, 1))
+    return doubleRand();
+  return val;
 }
 
 
 double createRandomDouble(double min, double max) {
-  double randVal = doubleRand();
-  return ((max - min) * randVal + min);
+  return roundf(((max - min) * doubleRand() + min) * 100) / 100;
 }
 
 unordered_map<string, double> createMap() {
 
   unordered_map<string, double> outputMap;
 
-  outputMap["pomposity"] = createRandomDouble(0.0, 1.0);
-  outputMap["learning_curve"] = createRandomDouble(1.0, 100.0);
-  outputMap["optimism"] = createRandomDouble(0.1, 10.0);
-  outputMap["atleast"] =  createRandomDouble(0.0, 100.0);
-  outputMap["done_percent"] = createRandomDouble(0.0, 100.0);
-  outputMap["productivity_new"] = createRandomDouble(0.0, 1.0);
-  outputMap["productivity_exp"] = createRandomDouble(1.0, 10.0);
-  outputMap["d"] = createRandomDouble(0.0, 90.0);
-  outputMap["ep"] = createRandomDouble(1.0, 30.0);
-  outputMap["nprod"] = createRandomDouble(0.1, 1.0);
-  outputMap["np"] = createRandomDouble(1.0, 30.0);
-  outputMap["ts"] = createRandomDouble(1.0, 10.0);
-  outputMap["to"] = createRandomDouble(1.0, 100.0);
-  outputMap["r"] = createRandomDouble(100.0, 1000.0);
-  outputMap["verbose"] = round(createRandomDouble(0.0, 1.0));
+  CREATE_MAP_ENTRY("pomposity", double(0.0), double(1.0))
+  CREATE_MAP_ENTRY("learning_curve", 1.0, 100.0)
+  CREATE_MAP_ENTRY("optimism", 0.1, 10.0)
+  CREATE_MAP_ENTRY("atleast", 0.0, 100.0)
+  CREATE_MAP_ENTRY("done_percent", 0.0, 100.0)
+  CREATE_MAP_ENTRY("productivity_new", 0.0, 1.0)
+  CREATE_MAP_ENTRY("productivity_exp", 1.0, 10.0)
+  CREATE_MAP_ENTRY("d", 0.0, 90.0)
+  CREATE_MAP_ENTRY("ep", 1.0, 30.0)
+  CREATE_MAP_ENTRY("nprod", 0.1, 1.0)
+  CREATE_MAP_ENTRY("np", 1.0, 30.0)
+  CREATE_MAP_ENTRY("ts", 1.0, 10.0)
+  CREATE_MAP_ENTRY("to", 1.0, 100.0)
+  CREATE_MAP_ENTRY("r", 100.0, 1000.0)
+  CREATE_MAP_ENTRY("verbose", 0.0, 1.0)
   
   return outputMap;
 }
 
 void outputArgs(unordered_map<string, double> outputMap) {
   bool verbose = false;
-  if (outputMap["verbose"] >= 0.5)
-    verbose = true;
+  SET_VERBOSE
   printf("{'pomposity': %.2f, 'learning_curve': %.2f, 'optimism': %.2f, 'atleast': %.2f, "
   	     "'done_percent': %.2f, 'productivity_new': %.2f, 'productivity_exp': %.2f, "
   	     "'d': %.2f, 'ep': %.2f, 'nprod': %.2f, 'np': %.2f, 'ts': %.2f, 'to': %.2f, "
@@ -144,20 +164,21 @@ void outputArgs(unordered_map<string, double> outputMap) {
   	   outputMap["productivity_new"], outputMap["productivity_exp"], outputMap["d"],
   	   outputMap["ep"], outputMap["nprod"], outputMap["np"], outputMap["ts"],
   	   outputMap["to"], outputMap["r"]);
-  if (verbose) cout << "True}" << endl;
-  else cout <<"False}" << endl;
+  if (verbose)
+    cout << "True}" << endl;
+  else 
+    cout <<"False}" << endl;
 }
 
-int main(int argc, char* argv[]) {
+int main(MAIN_ARGS) {
   //Quarantine - input
-  inputArgs(argc, argv);
-  
+  if (inputArgs(argc, argv) == 1)
+    return 1; 
   srand(seed);
   for (int i = 0; i < numRepeats; i++){
     unordered_map<string, double> outputMap = createMap();
-  
-    //Quarantine - output
-    outputArgs(outputMap);
+  //Quarantine - output
+  outputArgs(outputMap);
   }
   
 }
